@@ -74,7 +74,7 @@ public:
 
 	void call_client(std::string uuid, std::string _module, std::string func, Fossilizid::JsonParse::JsonArray argvs);
 
-	void call_group_client(Fossilizid::JsonParse::JsonArray uuids, std::string _module, std::string func, Fossilizid::JsonParse::JsonArray argvs);
+	void call_group_client(std::vector<std::string> uuids, std::string _module, std::string func, Fossilizid::JsonParse::JsonArray argvs);
 
 	void call_global_client(std::string _module, std::string func, Fossilizid::JsonParse::JsonArray argvs);
 

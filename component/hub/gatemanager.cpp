@@ -141,10 +141,9 @@ void gatemanager::call_client(std::string uuid, std::string _module, std::string
 	clients[uuid]->forward_hub_call_client(uuid, _module, func, argvs);
 }
 
-void gatemanager::call_group_client(Fossilizid::JsonParse::JsonArray uuids, std::string _module, std::string func, Fossilizid::JsonParse::JsonArray argvs) {
+void gatemanager::call_group_client(std::vector<std::string> uuids, std::string _module, std::string func, Fossilizid::JsonParse::JsonArray argvs) {
 	std::vector<std::string> tmp_uuids;
-	for (auto uuid : *uuids) {
-		auto _uuid = std::any_cast<std::string>(uuid);
+	for (auto _uuid : uuids) {
 		auto it_direct_client = direct_clients.find(_uuid);
 		if (it_direct_client != direct_clients.end()) {
 			it_direct_client->second->call_client(_module, func, argvs);
@@ -154,12 +153,15 @@ void gatemanager::call_group_client(Fossilizid::JsonParse::JsonArray uuids, std:
 		tmp_uuids.push_back(_uuid);
 	}
 
+	auto array_uuid = Fossilizid::JsonParse::Make_JsonArray();
 	std::vector<std::shared_ptr<gateproxy> > tmp_gates;
 	for (auto uuid : tmp_uuids) {
 		auto it_gate = clients.find(uuid);
 		if (it_gate == clients.end()) {
 			continue;
 		}
+
+		array_uuid->push_back(uuid);
 
 		if (std::find(tmp_gates.begin(), tmp_gates.end(), it_gate->second) == tmp_gates.end()) {
 			continue;
@@ -169,7 +171,7 @@ void gatemanager::call_group_client(Fossilizid::JsonParse::JsonArray uuids, std:
 	}
 
 	for (auto gate_proxy : tmp_gates) {
-		gate_proxy->forward_hub_call_group_client(uuids, _module, func, argvs);
+		gate_proxy->forward_hub_call_group_client(array_uuid, _module, func, argvs);
 	}
 }
 
