@@ -17,6 +17,7 @@
 #include <timerservice.h>
 #include <memory>
 
+#include <log.h>
 #include <config.h>
 #include <module.h>
 #include <modulemanager.h>
@@ -68,14 +69,13 @@ public:
 	std::shared_ptr<closehandle> close_handle;
 	std::shared_ptr<gatemanager> gates;
 	std::shared_ptr<hubsvrmanager> hubs;
-
-private:
 	std::shared_ptr<service::timerservice> _timerservice;
 
 	std::shared_ptr<config::config> _center_config;
 	std::shared_ptr<config::config> _root_config;
 	std::shared_ptr<config::config> _config;
 
+private:
 	std::shared_ptr<service::enetacceptservice> _hub_service;
 	std::shared_ptr<service::enetconnectservice> _gate_service;
 	std::shared_ptr<service::connectservice> _center_service;

@@ -24,10 +24,13 @@ link_directories(${zlib_LIBS_PATH})
 set(websocketpp_INCLUDE_PATH ${PROJECT_SOURCE_DIR}//3rdparty//websocketpp CACHE PATH "websocketpp include path")
 INCLUDE_DIRECTORIES(${websocketpp_INCLUDE_PATH})
 
-set(enet_INCLUDE_PATH ${PROJECT_SOURCE_DIR}//3rdparty//enet//include CACHE PATH "zlib include path")
+set(enet_INCLUDE_PATH ${PROJECT_SOURCE_DIR}//3rdparty//enet//include CACHE PATH "enet include path")
 INCLUDE_DIRECTORIES(${enet_INCLUDE_PATH})
 
 set(enet_LIBS_PATH ${PROJECT_BINARY_DIR}//3rdparty//zlib CACHE PATH "enet lib path")
 link_directories(${enet_LIBS_PATH})
+
+set(spdlog_INCLUDE_PATH ${PROJECT_SOURCE_DIR}//3rdparty//spdlog//include CACHE PATH "spdlog include path")
+INCLUDE_DIRECTORIES(${spdlog_INCLUDE_PATH})
 
 add_subdirectory(./component/hub)

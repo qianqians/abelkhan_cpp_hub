@@ -51,7 +51,7 @@ Returns the incomplete elliptic integral of the first kind ['F([phi], k)]:
 
 [equation ellint2]
 
-Requires -1 <= k <= 1, otherwise returns the result of __domain_error.
+Requires k[super 2]sin[super 2](phi) < 1, otherwise returns the result of __domain_error.
 
 [optional_policy]
 
@@ -65,7 +65,7 @@ Returns the complete elliptic integral of the first kind ['K(k)]:
 
 [equation ellint6]
 
-Requires -1 <= k <= 1, otherwise returns the result of __domain_error.
+Requires |k| < 1, otherwise returns the result of __domain_error.
 
 [optional_policy]
 
@@ -78,6 +78,15 @@ system are given as narrower types have __zero_error.  All values
 are relative errors in units of epsilon.
 
 [table_ellint_1]
+
+The following error plot are based on an exhaustive search of the functions domain, MSVC-15.5 at `double` precision, 
+and GCC-7.1/Ubuntu for `long double` and `__float128`.
+
+[graph elliptic_integral_k__double]
+
+[graph elliptic_integral_k__80_bit_long_double]
+
+[graph elliptic_integral_k____float128]
 
 [heading Testing]
 
@@ -145,7 +154,7 @@ Returns the incomplete elliptic integral of the second kind ['E([phi], k)]:
 
 [equation ellint3]
 
-Requires -1 <= k <= 1, otherwise returns the result of __domain_error.
+Requires k[super 2]sin[super 2](phi) < 1, otherwise returns the result of __domain_error.
 
 [optional_policy]
 
@@ -159,7 +168,7 @@ Returns the complete elliptic integral of the second kind ['E(k)]:
 
 [equation ellint7]
 
-Requires -1 <= k <= 1, otherwise returns the result of __domain_error.
+Requires |k| < 1, otherwise returns the result of __domain_error.
 
 [optional_policy]
 
@@ -172,6 +181,15 @@ system are given as narrower types have __zero_error.  All values
 are relative errors in units of epsilon.
 
 [table_ellint_2]
+
+The following error plot are based on an exhaustive search of the functions domain, MSVC-15.5 at `double` precision, 
+and GCC-7.1/Ubuntu for `long double` and `__float128`.
+
+[graph elliptic_integral_e__double]
+
+[graph elliptic_integral_e__80_bit_long_double]
+
+[graph elliptic_integral_e____float128]
 
 [heading Testing]
 
@@ -239,7 +257,7 @@ Returns the incomplete elliptic integral of the third kind ['[Pi](n, [phi], k)]:
 
 [equation ellint4]
 
-Requires ['-1 <= k <= 1] and ['n < 1/sin[super 2]([phi])], otherwise 
+Requires ['k[super 2]sin[super 2](phi) < 1] and ['n < 1/sin[super 2]([phi])], otherwise 
 returns the result of __domain_error (outside this range the result 
 would be complex).
 
@@ -255,7 +273,7 @@ Returns the complete elliptic integral of the first kind ['[Pi](n, k)]:
 
 [equation ellint8]
 
-Requires ['-1 <= k <= 1] and ['n < 1], otherwise returns the 
+Requires ['|k| < 1] and ['n < 1], otherwise returns the 
 result of __domain_error (outside this range the result would be complex).
 
 [optional_policy]
@@ -349,7 +367,7 @@ and
 These two functions evaluate the incomplete elliptic integral 
 ['D([phi], k)] and its complete counterpart ['D(k) = D([pi]/2, k)].
 
-The return type of these functions is computed using the __arg_pomotion_rules
+The return type of these functions is computed using the __arg_promotion_rules
 when the arguments are of different types: when they are the same type then the result
 is the same type as the arguments.
 
@@ -363,7 +381,7 @@ Returns the incomplete elliptic integral:
 
 [equation ellint_d]
 
-Requires ['-1 <= k <= 1], otherwise 
+Requires ['k[super 2]sin[super 2](phi) < 1], otherwise 
 returns the result of __domain_error (outside this range the result 
 would be complex).
 
@@ -391,6 +409,17 @@ is very large, in which case the usual trigonometric function argument-reduction
 [table_ellint_d_complete_]
 
 [table_ellint_d]
+
+The following error plot are based on an exhaustive search of the functions domain, MSVC-15.5 at `double` precision, 
+and GCC-7.1/Ubuntu for `long double` and `__float128`.
+
+[graph elliptic_integral_d__double]
+
+[graph elliptic_integral_d__80_bit_long_double]
+
+[graph elliptic_integral_d____float128]
+
+
 
 [heading Testing]
 
@@ -442,7 +471,12 @@ This function evaluates the Jacobi Zeta Function ['Z([phi], k)]
 
 [equation jacobi_zeta]
 
-The return type of this function is computed using the __arg_pomotion_rules
+Please note the use of [phi], and /k/ as the parameters, the function is often defined as ['Z([phi], m)]
+with ['m = k[super 2]], see for example  [@http://mathworld.wolfram.com/JacobiZetaFunction.html Weisstein, Eric W. "Jacobi Zeta Function." From MathWorld--A Wolfram Web Resource.]
+Or else as [@https://dlmf.nist.gov/22.16#E32 ['Z(x, k)]] with ['[phi] = am(x, k)], where ['am] is the [@https://dlmf.nist.gov/22.16#E1 Jacobi amplitude function] which is equivalent to
+['asin(jacobi_elliptic(k, x))].
+
+The return type of this function is computed using the __arg_promotion_rules
 when the arguments are of different types: when they are the same type then the result
 is the same type as the arguments.
 
@@ -512,7 +546,7 @@ This function evaluates the Heuman Lambda Function ['[Lambda][sub 0]([phi], k)]
 
 [equation heuman_lambda]
 
-The return type of this function is computed using the __arg_pomotion_rules
+The return type of this function is computed using the __arg_promotion_rules
 when the arguments are of different types: when they are the same type then the result
 is the same type as the arguments.
 

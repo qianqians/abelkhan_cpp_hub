@@ -14,6 +14,8 @@
 #include <centercaller.h>
 #include <hub_call_centercaller.h>
 
+#include <spdlog/spdlog.h>
+
 namespace hub{
 
 class centerproxy {
@@ -29,7 +31,7 @@ public:
 	}
 
 	void reg_server(std::string ip, short port, std::string uuid) {
-		std::cout << "begin connect center server" << std::endl;
+		spdlog::trace("begin connect center server");
 		_center_caller->reg_server("hub", ip, port, uuid);
 	}
 

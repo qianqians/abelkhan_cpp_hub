@@ -39,8 +39,11 @@ executor_binder&lt; typename decay&lt; T &gt;::type, Executor &gt; <a class="lin
     T &amp;&amp; t,
     typename enable_if&lt; is_executor&lt; Executor &gt;::value &gt;::type *  = 0);
   <span class="emphasis"><em>&#187; <a class="link" href="bind_executor/overload1.html" title="bind_executor (1 of 2 overloads)">more...</a></em></span>
-
-template&lt;
+</pre>
+<p>
+        Associate an object of type <code class="computeroutput">T</code> with an execution context's executor.
+      </p>
+<pre class="programlisting">template&lt;
     typename ExecutionContext,
     typename T&gt;
 executor_binder&lt; typename decay&lt; T &gt;::type, typename ExecutionContext::executor_type &gt; <a class="link" href="bind_executor/overload2.html" title="bind_executor (2 of 2 overloads)">bind_executor</a>(
@@ -62,7 +65,7 @@ executor_binder&lt; typename decay&lt; T &gt;::type, typename ExecutionContext::
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2003-2018 Christopher M. Kohlhoff<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2003-2019 Christopher M. Kohlhoff<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

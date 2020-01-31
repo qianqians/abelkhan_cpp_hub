@@ -77,7 +77,7 @@ public:
 					}
 					catch (Fossilizid::JsonParse::jsonformatexception e)
 					{
-						std::cout << "error:" << json_str << std::endl;
+						spdlog::error("webchannel recv error:{0}", json_str);
 						disconnect();
 
 						return;
@@ -100,7 +100,7 @@ public:
 			}
 		}
 		catch (std::exception e) {
-			std::cout << "error:" << e.what() << std::endl;
+			spdlog::error("webchannel recv exception error:{0}", e.what());
 			disconnect();
 		}
 	}
@@ -114,7 +114,7 @@ public:
 		{
 		}
 		catch (std::exception e) {
-			std::cout << "error:" << e.what() << std::endl;
+			spdlog::error("webchannel disconnect error:{0}", e.what());
 		}
 	}
 
@@ -149,9 +149,11 @@ public:
 			server->send(hdl, _data, datasize, websocketpp::frame::opcode::binary);
 
 			delete[] _data;
+
+			spdlog::trace("push:{0}", data);
 		}
 		catch (std::exception e) {
-			std::cout << "error:" << e.what() << std::endl;
+			spdlog::error("webchannel push error:{0}", e.what());
 			is_close = true;
 		}
 	}

@@ -1,3 +1,26 @@
+/*
+@ @licstart  The following is the entire license notice for the
+JavaScript code in this file.
+
+Copyright (C) 1997-2017 by Dimitri van Heesch
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this program; if not, write to the Free Software Foundation, Inc.,
+51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+
+@licend  The above is the entire license notice
+for the JavaScript code in this file
+*/
 var NAVTREE =
 [
   [ "Boost.Hana", "index.html", [
@@ -33,8 +56,9 @@ var NAVTREE =
         [ "Checking expression validity", "index.html#tutorial-introspection-is_valid", [
           [ "Non-static members", "index.html#tutorial-introspection-is_valid-non_static", null ],
           [ "Static members", "index.html#tutorial-introspection-is_valid-static", null ],
-          [ "Nested type names", "index.html#tutorial-introspection-is_valid-typename", null ],
-          [ "Nested templates", "index.html#tutorial-introspection-is_valid-template", null ]
+          [ "Nested type names", "index.html#tutorial-introspection-is_valid-nested-typename", null ],
+          [ "Nested templates", "index.html#tutorial-introspection-is_valid-nested-template", null ],
+          [ "Template specializations", "index.html#tutorial-introspection-is_valid-template", null ]
         ] ],
         [ "Taking control of SFINAE", "index.html#tutorial-introspection-sfinae", null ],
         [ "Introspecting user-defined types", "index.html#tutorial-introspection-adapting", null ],
@@ -91,8 +115,7 @@ var NAVTREE =
         [ "Constexpr stripping", "index.html#tutorial-appendix-constexpr-stripping", null ],
         [ "Constexpr preservation", "index.html#tutorial-tutorial-appendix-constexpr-preservation", null ],
         [ "Side effects", "index.html#tutorial-appendix-constexpr-effects", null ]
-      ] ],
-      [ "Appendix II: A minimal MPL", "index.html#tutorial-appendix-MPL", null ]
+      ] ]
     ] ],
     [ "Reference documentation", "modules.html", "modules" ],
     [ "Alphabetical index", "functions.html", null ],

@@ -118,7 +118,7 @@ private:
 					}
 					catch (Fossilizid::JsonParse::jsonformatexception e)
 					{
-						std::cout << "error:" << json_str << std::endl;
+						spdlog::error("channel recv jsonformatexception error:{0}", json_str);
 						disconnect();
 
 						return;
@@ -144,7 +144,7 @@ private:
 			s->async_read_some(boost::asio::buffer(read_buff, 16 * 1024), boost::bind(&channel::onRecv, shared_from_this(), _1, _2));
 		}
 		catch (std::exception e) {
-			std::cout << "error:" << e.what() << std::endl;
+			spdlog::error("channel recv exception error:{0}", e.what());
 			disconnect();
 		}
 	}
@@ -159,7 +159,7 @@ public:
 			s->close();
 		}
 		catch (std::exception e) {
-			std::cout << "error:" << e.what() << std::endl;
+			spdlog::error("channel disconnect error:{0}", e.what());
 		}
 	}
 
@@ -211,7 +211,7 @@ public:
 							continue;
 						}
 						else {
-							std::cout << "error:" << e.what() << std::endl;
+							spdlog::error("channel push error:{0}", e.what());
 							is_close = true;
 							break;
 						}
@@ -243,7 +243,7 @@ public:
 							continue;
 						}
 						else {
-							std::cout << "error:" << e.what() << std::endl;
+							spdlog::error("channel push error:{0}", e.what());
 							is_close = true;
 							break;
 						}
@@ -254,7 +254,7 @@ public:
 			}
 		}
 		catch (std::exception e) {
-			std::cout << "error:" << e.what() << std::endl;
+			spdlog::error("channel push exception error:{0}", e.what());
 			is_close = true;
 		}
 	}

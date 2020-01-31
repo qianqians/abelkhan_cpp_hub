@@ -11,6 +11,8 @@
 #include <set>
 #include <mutex>
 
+#include <spdlog/spdlog.h>
+
 #include <JsonParse.h>
 
 #include "Imodule.h"
@@ -61,7 +63,7 @@ public:
 						module->second->process_event(ch, buff);
 					}
 					else {
-						std::cout << "do not have a module named:" << module_name << std::endl;
+						spdlog::error("do not have a module named:{0}", module_name);
 					}
 				}
 				else {

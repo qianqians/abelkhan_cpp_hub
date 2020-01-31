@@ -940,9 +940,160 @@
                   <code class="computeroutput"><span class="identifier">N</span></code> is one of the
                   values <code class="computeroutput"><span class="identifier">number_kind_integer</span></code>,
                   <code class="computeroutput"><span class="identifier">number_kind_floating_point</span></code>,
+                  <code class="computeroutput"><span class="identifier">number_kind_complex</span></code>,
                   <code class="computeroutput"><span class="identifier">number_kind_rational</span></code>
                   or <code class="computeroutput"><span class="identifier">number_kind_fixed_point</span></code>.
                   Defaults to <code class="computeroutput"><span class="identifier">number_kind_floating_point</span></code>.
+                </p>
+              </td>
+<td>
+                <p>
+                  &#160;
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">eval_conj</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span>
+                  <span class="identifier">cb</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">void</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Sets <code class="computeroutput"><span class="identifier">b</span></code> to the complex
+                  conjugate of <code class="computeroutput"><span class="identifier">cb</span></code>.
+                  Required for complex types only - other types have a sensible default.
+                </p>
+              </td>
+<td>
+                <p>
+                  &#160;
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">eval_proj</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span>
+                  <span class="identifier">cb</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">void</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Sets <code class="computeroutput"><span class="identifier">b</span></code> to the Riemann
+                  projection of <code class="computeroutput"><span class="identifier">cb</span></code>.
+                  Required for complex types only - other types have a sensible default.
+                </p>
+              </td>
+<td>
+                <p>
+                  &#160;
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">eval_real</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span>
+                  <span class="identifier">cb</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">void</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Sets <code class="computeroutput"><span class="identifier">b</span></code> to the real
+                  part of <code class="computeroutput"><span class="identifier">cb</span></code>. Required
+                  for complex types only - other types have a sensible default.
+                </p>
+              </td>
+<td>
+                <p>
+                  &#160;
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">eval_imag</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span>
+                  <span class="identifier">cb</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">void</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Sets <code class="computeroutput"><span class="identifier">b</span></code> to the imaginary
+                  of <code class="computeroutput"><span class="identifier">cb</span></code>. Required
+                  for complex types only - other types have a sensible default.
+                </p>
+              </td>
+<td>
+                <p>
+                  &#160;
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">eval_set_real</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span>
+                  <span class="identifier">a</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">void</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Sets the real part of <code class="computeroutput"><span class="identifier">b</span></code>
+                  to <code class="computeroutput"><span class="identifier">cb</span></code>. Required
+                  for complex types only - other types have a sensible default.
+                </p>
+              </td>
+<td>
+                <p>
+                  &#160;
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">eval_set_imag</span><span class="special">(</span><span class="identifier">b</span><span class="special">,</span>
+                  <span class="identifier">a</span><span class="special">)</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">void</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Sets the imaginary part of <code class="computeroutput"><span class="identifier">b</span></code>
+                  to <code class="computeroutput"><span class="identifier">cb</span></code>. Required
+                  for complex types only - other types have a sensible default.
                 </p>
               </td>
 <td>
@@ -4512,7 +4663,8 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2002-2013 John Maddock and Christopher Kormanyos<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2002-2019 John Maddock
+      and Christopher Kormanyos<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

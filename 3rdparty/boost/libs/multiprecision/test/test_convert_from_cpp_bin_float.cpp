@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////
 //  Copyright 2012 John Maddock. Distributed under the Boost
 //  Software License, Version 1.0. (See accompanying file
-//  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_
+//  LICENSE_1_0.txt or copy at https://www.boost.org/LICENSE_1_0.txt
 
 #ifdef _MSC_VER
 #  define _SCL_SECURE_NO_WARNINGS
@@ -158,6 +158,8 @@ int main()
    test_convert<cpp_bin_float_50, cpp_int>();
    test_convert<cpp_bin_float_50, int128_t>();
    test_convert<cpp_bin_float_50, uint128_t>();
+   test_convert<cpp_bin_float_quad, checked_int1024_t>();
+   test_convert<cpp_bin_float_quad, checked_uint1024_t>();
 
 
    test_convert<cpp_bin_float_50, cpp_rational>();

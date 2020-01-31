@@ -160,16 +160,10 @@ Typedef for a timer based on
               </td>
 <td>
                 <p>
-                  Constructor.
-                </p>
-                <p>
-                  Constructor to set a particular expiry time as an absolute time.
-                </p>
-                <p>
-                  Constructor to set a particular expiry time relative to now.
-                </p>
-                <p>
-                  Move-construct a basic_waitable_timer from another.
+                  Constructor. <br> <span class="silver"> &#8212;</span><br> Constructor to set a particular expiry
+                  time as an absolute time. <br> <span class="silver"> &#8212;</span><br> Constructor to set a particular
+                  expiry time relative to now. <br> <span class="silver"> &#8212;</span><br> Move-construct a basic_waitable_timer
+                  from another.
                 </p>
               </td>
 </tr>
@@ -182,10 +176,8 @@ Typedef for a timer based on
 <td>
                 <p>
                   Cancel any asynchronous operations that are waiting on the timer.
-                </p>
-                <p>
-                  (Deprecated: Use non-error_code overload.) Cancel any asynchronous
-                  operations that are waiting on the timer.
+                  <br> <span class="silver"> &#8212;</span><br> (Deprecated: Use non-error_code overload.) Cancel
+                  any asynchronous operations that are waiting on the timer.
                 </p>
               </td>
 </tr>
@@ -198,10 +190,8 @@ Typedef for a timer based on
 <td>
                 <p>
                   Cancels one asynchronous operation that is waiting on the timer.
-                </p>
-                <p>
-                  (Deprecated: Use non-error_code overload.) Cancels one asynchronous
-                  operation that is waiting on the timer.
+                  <br> <span class="silver"> &#8212;</span><br> (Deprecated: Use non-error_code overload.) Cancels
+                  one asynchronous operation that is waiting on the timer.
                 </p>
               </td>
 </tr>
@@ -226,14 +216,9 @@ Typedef for a timer based on
 <td>
                 <p>
                   (Deprecated: Use expiry().) Get the timer's expiry time as an absolute
-                  time.
-                </p>
-                <p>
+                  time. <br> <span class="silver"> &#8212;</span><br> Set the timer's expiry time as an absolute
+                  time. <br> <span class="silver"> &#8212;</span><br> (Deprecated: Use non-error_code overload.)
                   Set the timer's expiry time as an absolute time.
-                </p>
-                <p>
-                  (Deprecated: Use non-error_code overload.) Set the timer's expiry
-                  time as an absolute time.
                 </p>
               </td>
 </tr>
@@ -246,11 +231,8 @@ Typedef for a timer based on
 <td>
                 <p>
                   (Deprecated: Use expiry().) Get the timer's expiry time relative
-                  to now.
-                </p>
-                <p>
-                  (Deprecated: Use expires_after().) Set the timer's expiry time
-                  relative to now.
+                  to now. <br> <span class="silver"> &#8212;</span><br> (Deprecated: Use expires_after().) Set the
+                  timer's expiry time relative to now.
                 </p>
               </td>
 </tr>
@@ -275,32 +257,6 @@ Typedef for a timer based on
 <td>
                 <p>
                   Get the executor associated with the object.
-                </p>
-              </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  <a class="link" href="basic_waitable_timer/get_io_context.html" title="basic_waitable_timer::get_io_context"><span class="bold"><strong>get_io_context</strong></span></a>
-                </p>
-              </td>
-<td>
-                <p>
-                  (Deprecated: Use get_executor().) Get the io_context associated
-                  with the object.
-                </p>
-              </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  <a class="link" href="basic_waitable_timer/get_io_service.html" title="basic_waitable_timer::get_io_service"><span class="bold"><strong>get_io_service</strong></span></a>
-                </p>
-              </td>
-<td>
-                <p>
-                  (Deprecated: Use get_executor().) Get the io_context associated
-                  with the object.
                 </p>
               </td>
 </tr>
@@ -385,7 +341,7 @@ Typedef for a timer based on
         Performing a blocking wait (C++11):
       </p>
 <pre class="programlisting">// Construct a timer without setting an expiry time.
-boost::asio::steady_timer timer(io_context);
+boost::asio::steady_timer timer(my_context);
 
 // Set an expiry time relative to now.
 timer.expires_after(std::chrono::seconds(5));
@@ -407,7 +363,7 @@ timer.wait();
 ...
 
 // Construct a timer with an absolute expiry time.
-boost::asio::steady_timer timer(io_context,
+boost::asio::steady_timer timer(my_context,
     std::chrono::steady_clock::now() + std::chrono::seconds(60));
 
 // Start an asynchronous wait.
@@ -479,7 +435,7 @@ void on_timeout(const boost::system::error_code&amp; e)
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2003-2018 Christopher M. Kohlhoff<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2003-2019 Christopher M. Kohlhoff<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

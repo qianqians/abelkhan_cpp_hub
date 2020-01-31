@@ -20,6 +20,8 @@
 
 #include <hub_call_dbproxycaller.h>
 
+#include <spdlog/spdlog.h>
+
 namespace hub{
 
 class dbproxyproxy : public std::enable_shared_from_this<dbproxyproxy> {
@@ -78,7 +80,7 @@ public:
 	};
 
 	void reg_server(std::string uuid) {
-		std::cout << "begin connect center server" << std::endl;
+		spdlog::trace("begin connect center server");
 		_dbproxy_caller->reg_hub(uuid);
 	}
 

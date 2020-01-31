@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////
 //  Copyright 2012 John Maddock. Distributed under the Boost
 //  Software License, Version 1.0. (See accompanying file
-//  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_
+//  LICENSE_1_0.txt or copy at https://www.boost.org/LICENSE_1_0.txt
 //
 
 #ifdef _MSC_VER
@@ -65,6 +65,8 @@ void check_round(const T& val, bool check_extended = false)
    BOOST_CHECK(((abs(f1 - val) <= abs(f2 - val))));
    BOOST_CHECK_EQUAL(boost::math::signbit(val), boost::math::signbit(f1));
 
+#if !defined(BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS)
+
    if(check_extended)
    {
       //
@@ -88,6 +90,9 @@ void check_round(const T& val, bool check_extended = false)
       BOOST_CHECK(diff2 >= diff1);
       BOOST_CHECK_EQUAL(boost::math::signbit(val), boost::math::signbit(l1));
    }
+
+#endif
+
 }
 
 

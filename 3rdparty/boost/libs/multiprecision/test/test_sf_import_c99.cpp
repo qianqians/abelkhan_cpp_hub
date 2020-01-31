@@ -10,7 +10,7 @@
 #if !defined(TEST_MPF_50) && !defined(TEST_MPF) && !defined(TEST_BACKEND) && !defined(TEST_CPP_DEC_FLOAT)\
    && !defined(TEST_MPFR) && !defined(TEST_MPFR_50) && !defined(TEST_MPFI_50) && !defined(TEST_FLOAT128)\
    && !defined(TEST_CPP_BIN_FLOAT) && !defined(TEST_CPP_DEC_FLOAT_2) && !defined(TEST_CPP_DEC_FLOAT_3)\
-  && !defined(TEST_CPP_DEC_FLOAT_4) && !defined(TEST_CPP_DEC_FLOAT_5) && !defined(TEST_CPP_BIN_FLOAT_2) && !defined(TEST_CPP_BIN_FLOAT_3)
+  && !defined(TEST_CPP_DEC_FLOAT_4) && !defined(TEST_CPP_DEC_FLOAT_5) && !defined(TEST_CPP_DEC_FLOAT_6) && !defined(TEST_CPP_BIN_FLOAT_2) && !defined(TEST_CPP_BIN_FLOAT_3)
 #  define TEST_MPF_50
 #  define TEST_MPFR_50
 #  define TEST_MPFI_50
@@ -19,6 +19,7 @@
 #  define TEST_CPP_DEC_FLOAT_3
 #  define TEST_CPP_DEC_FLOAT_4
 #  define TEST_CPP_DEC_FLOAT_5
+#  define TEST_CPP_DEC_FLOAT_6
 #  define TEST_FLOAT128
 #  define TEST_CPP_BIN_FLOAT
 #  define TEST_CPP_BIN_FLOAT_2
@@ -42,7 +43,7 @@
 #ifdef TEST_MPFI_50
 #include <boost/multiprecision/mpfi.hpp>
 #endif
-#if defined(TEST_CPP_DEC_FLOAT) || defined(TEST_CPP_DEC_FLOAT_2) || defined(TEST_CPP_DEC_FLOAT_3) || defined(TEST_CPP_DEC_FLOAT_4) || defined(TEST_CPP_DEC_FLOAT_5)
+#if defined(TEST_CPP_DEC_FLOAT) || defined(TEST_CPP_DEC_FLOAT_2) || defined(TEST_CPP_DEC_FLOAT_3) || defined(TEST_CPP_DEC_FLOAT_4) || defined(TEST_CPP_DEC_FLOAT_5) || defined(TEST_CPP_DEC_FLOAT_6)
 #include <boost/multiprecision/cpp_dec_float.hpp>
 #endif
 #if defined(TEST_CPP_BIN_FLOAT) ||  defined(TEST_CPP_BIN_FLOAT_2) || defined(TEST_CPP_BIN_FLOAT_3)
@@ -54,6 +55,7 @@
 #endif
 
 #include <boost/math/constants/constants.hpp>
+#include <boost/math/special_functions/gamma.hpp>
 #include "test.hpp"
 
 #ifdef signbit
@@ -2035,6 +2037,45 @@ void test_c99_appendix_F()
       check_invalid(fmod(arg, arg2));
       check_invalid(fmod(arg2, arg2));
    }
+   //
+   // Bugs:
+   //
+   int sign = 0;
+   boost::math::lgamma(T(0.000001), &sign);
+   BOOST_CHECK_EQUAL(sign, 1);
+   sign = 0;
+   boost::math::lgamma(T(0.5), &sign);
+   BOOST_CHECK_EQUAL(sign, 1);
+   sign = 0;
+   boost::math::lgamma(T(0.9), &sign);
+   BOOST_CHECK_EQUAL(sign, 1);
+   sign = 0;
+   boost::math::lgamma(T(1.1), &sign);
+   BOOST_CHECK_EQUAL(sign, 1);
+   sign = 0;
+   boost::math::lgamma(T(1.9), &sign);
+   BOOST_CHECK_EQUAL(sign, 1);
+   sign = 0;
+   boost::math::lgamma(T(2.1), &sign);
+   BOOST_CHECK_EQUAL(sign, 1);
+   sign = 0;
+   boost::math::lgamma(T(20), &sign);
+   BOOST_CHECK_EQUAL(sign, 1);
+   sign = 0;
+   boost::math::lgamma(T(-0.0000000000001), &sign);
+   BOOST_CHECK_EQUAL(sign, -1);
+   sign = 0;
+   boost::math::lgamma(T(-0.5), &sign);
+   BOOST_CHECK_EQUAL(sign, -1);
+   sign = 0;
+   boost::math::lgamma(T(-1.5), &sign);
+   BOOST_CHECK_EQUAL(sign, 1);
+   sign = 0;
+   boost::math::lgamma(T(-2.5), &sign);
+   BOOST_CHECK_EQUAL(sign, -1);
+   sign = 0;
+   boost::math::lgamma(T(-3.5), &sign);
+   BOOST_CHECK_EQUAL(sign, 1);
 }
 
 int main()
@@ -2083,9 +2124,9 @@ int main()
 #endif
 #ifdef TEST_CPP_DEC_FLOAT_5
    test<boost::multiprecision::number<boost::multiprecision::cpp_dec_float<59, long long, std::allocator<char> > > >();
-#if !(defined(__GNUC__) && defined(_WIN32)) // Object file too large otherwise
-   test<boost::multiprecision::number<boost::multiprecision::cpp_dec_float<58, long long, std::allocator<char> > > >();
 #endif
+#ifdef TEST_CPP_DEC_FLOAT_6
+   test<boost::multiprecision::number<boost::multiprecision::cpp_dec_float<58, long long, std::allocator<char> > > >();
 #endif
 #ifdef TEST_CPP_BIN_FLOAT
    test<boost::multiprecision::cpp_bin_float_50>();

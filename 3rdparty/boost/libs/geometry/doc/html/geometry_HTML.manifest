@@ -102,6 +102,8 @@ geometry/reference/algorithms/correct.html
 geometry/reference/algorithms/correct/correct_1.html
 geometry/reference/algorithms/correct/correct_2_with_strategy.html
 geometry/reference/algorithms/covered_by.html
+geometry/reference/algorithms/covered_by/covered_by_2.html
+geometry/reference/algorithms/covered_by/covered_by_3_with_strategy.html
 geometry/reference/algorithms/crosses.html
 geometry/reference/algorithms/crosses/crosses_3_with_strategy.html
 geometry/reference/algorithms/crosses/crosses_2.html
@@ -111,6 +113,12 @@ geometry/reference/algorithms/densify/densify_3.html
 geometry/reference/algorithms/difference.html
 geometry/reference/algorithms/difference/difference_4_with_strategy.html
 geometry/reference/algorithms/difference/difference_3.html
+geometry/reference/algorithms/discrete_frechet_distance.html
+geometry/reference/algorithms/discrete_frechet_distance/discrete_frechet_distance_3_with_strategy.html
+geometry/reference/algorithms/discrete_frechet_distance/discrete_frechet_distance_2.html
+geometry/reference/algorithms/discrete_hausdorff_distance.html
+geometry/reference/algorithms/discrete_hausdorff_distance/discrete_hausdorff_distance_3_with_strategy.html
+geometry/reference/algorithms/discrete_hausdorff_distance/discrete_hausdorff_distance_2.html
 geometry/reference/algorithms/disjoint.html
 geometry/reference/algorithms/disjoint/disjoint_3_with_strategy.html
 geometry/reference/algorithms/disjoint/disjoint_2.html
@@ -137,6 +145,9 @@ geometry/reference/algorithms/intersection.html
 geometry/reference/algorithms/intersection/intersection_4_with_strategy.html
 geometry/reference/algorithms/intersection/intersection_3.html
 geometry/reference/algorithms/intersects.html
+geometry/reference/algorithms/intersects/intersects_1_one_geometry.html
+geometry/reference/algorithms/intersects/intersects_3_with_strategy.html
+geometry/reference/algorithms/intersects/intersects_2_two_geometries.html
 geometry/reference/algorithms/is_empty.html
 geometry/reference/algorithms/is_simple.html
 geometry/reference/algorithms/is_simple/is_simple_2_with_strategy.html
@@ -151,6 +162,9 @@ geometry/reference/algorithms/is_valid/is_valid_2_with_message.html
 geometry/reference/algorithms/length.html
 geometry/reference/algorithms/length/length_1.html
 geometry/reference/algorithms/length/length_2_with_strategy.html
+geometry/reference/algorithms/line_interpolate.html
+geometry/reference/algorithms/line_interpolate/line_interpolate_4_with_strategy.html
+geometry/reference/algorithms/line_interpolate/line_interpolate_3.html
 geometry/reference/algorithms/make.html
 geometry/reference/algorithms/make/make_2_2_coordinate_values.html
 geometry/reference/algorithms/make/make_3_3_coordinate_values.html
@@ -161,6 +175,8 @@ geometry/reference/algorithms/num_interior_rings.html
 geometry/reference/algorithms/num_points.html
 geometry/reference/algorithms/num_segments.html
 geometry/reference/algorithms/overlaps.html
+geometry/reference/algorithms/overlaps/overlaps_3_with_strategy.html
+geometry/reference/algorithms/overlaps/overlaps_2.html
 geometry/reference/algorithms/perimeter.html
 geometry/reference/algorithms/perimeter/perimeter_1.html
 geometry/reference/algorithms/perimeter/perimeter_2_with_strategy.html
@@ -178,6 +194,9 @@ geometry/reference/algorithms/sym_difference.html
 geometry/reference/algorithms/sym_difference/sym_difference_4_with_strategy.html
 geometry/reference/algorithms/sym_difference/sym_difference_3.html
 geometry/reference/algorithms/touches.html
+geometry/reference/algorithms/touches/touches_1_one_geometry.html
+geometry/reference/algorithms/touches/touches_2_two_geometries.html
+geometry/reference/algorithms/touches/touches_3_with_strategy.html
 geometry/reference/algorithms/transform.html
 geometry/reference/algorithms/transform/transform_3_with_strategy.html
 geometry/reference/algorithms/transform/transform_2.html
@@ -228,7 +247,6 @@ geometry/reference/core/cs_tag.html
 geometry/reference/core/degree.html
 geometry/reference/core/dimension.html
 geometry/reference/core/interior_type.html
-geometry/reference/core/is_radian.html
 geometry/reference/core/point_order.html
 geometry/reference/core/point_type.html
 geometry/reference/core/radian.html
@@ -251,6 +269,8 @@ geometry/reference/exceptions.html
 geometry/reference/exceptions/exception.html
 geometry/reference/exceptions/centroid_exception.html
 geometry/reference/io.html
+geometry/reference/io/dsv.html
+geometry/reference/io/dsv/dsv.html
 geometry/reference/io/wkt.html
 geometry/reference/io/wkt/read_wkt.html
 geometry/reference/io/wkt/wkt.html
@@ -361,6 +381,7 @@ geometry/reference/strategies/strategy_buffer_distance_symmetric.html
 geometry/reference/strategies/strategy_buffer_distance_asymmetric.html
 geometry/reference/strategies/strategy_buffer_point_circle.html
 geometry/reference/strategies/strategy_buffer_point_square.html
+geometry/reference/strategies/strategy_buffer_geographic_point_circle.html
 geometry/reference/strategies/strategy_buffer_side_straight.html
 geometry/reference/strategies/strategy_centroid_average.html
 geometry/reference/strategies/strategy_centroid_bashein_detmer.html
@@ -375,6 +396,9 @@ geometry/reference/strategies/strategy_distance_haversine.html
 geometry/reference/strategies/strategy_distance_projected_point.html
 geometry/reference/strategies/strategy_distance_cross_track.html
 geometry/reference/strategies/strategy_distance_cross_track_point_box.html
+geometry/reference/strategies/strategy_line_interpolate_cartesian.html
+geometry/reference/strategies/strategy_line_interpolate_geographic.html
+geometry/reference/strategies/strategy_line_interpolate_spherical.html
 geometry/reference/strategies/strategy_side_side_by_triangle.html
 geometry/reference/strategies/strategy_side_side_by_cross_track.html
 geometry/reference/strategies/strategy_side_spherical_side_formula.html

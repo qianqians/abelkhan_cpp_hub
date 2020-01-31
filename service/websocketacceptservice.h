@@ -22,6 +22,9 @@ public:
 			server = std::make_shared<websocketpp::server<websocketpp::config::asio> >();
 			server->init_asio();
 
+			server->set_access_channels(websocketpp::log::alevel::none);
+			server->set_error_channels(websocketpp::log::elevel::none);
+
 			server->set_open_handler(websocketpp::lib::bind(&webacceptservice::onAccept, this, websocketpp::lib::placeholders::_1));
 			server->set_close_handler(websocketpp::lib::bind(&webacceptservice::onChannelDisconn, this, websocketpp::lib::placeholders::_1));
 			server->set_message_handler(websocketpp::lib::bind(&webacceptservice::onMsg, this, websocketpp::lib::placeholders::_1, websocketpp::lib::placeholders::_2));
@@ -34,7 +37,7 @@ public:
 					server->run();
 				}
 				catch (std::exception e) {
-					std::cout << "err:" << e.what() << std::endl;
+					spdlog::error("err:{0}", e.what());
 				}
 			}
 		}) 

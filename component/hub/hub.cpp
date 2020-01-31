@@ -45,6 +45,15 @@ hub_service::hub_service(std::string config_file_path, std::string config_name) 
 void hub_service::init() {
 	enet_initialize();
 
+	auto file_path = _config->get_value_string("log_dir") + _config->get_value_string("log_file");
+	auto log_level = _config->get_value_string("log_level");
+	if (log_level == "trace") {
+		_log::InitLog(file_path, spdlog::level::level_enum::trace);
+	}
+	else if (log_level == "error") {
+		_log::InitLog(file_path, spdlog::level::level_enum::err);
+	}
+
 	_timerservice = std::make_shared<service::timerservice>();
 	close_handle = std::make_shared<closehandle>();
 	hubs = std::make_shared<hubsvrmanager>(shared_from_this());
@@ -95,7 +104,7 @@ void hub_service::init() {
 }
 
 void hub_service::connect_center() {
-	std::cout << "begin on connect center" << std::endl;
+	spdlog::trace("begin on connect center");
 
 	auto ip = _center_config->get_value_string("ip");
 	auto port = _center_config->get_value_int("port");
@@ -114,7 +123,7 @@ void hub_service::connect_center() {
 
 	_centerproxy->reg_server(_config->get_value_string("ip"), _config->get_value_int("port"), uuid);
 
-	std::cout << "end on connect center" << std::endl;
+	spdlog::trace("end on connect center");
 }
 
 void hub_service::connect_gate(std::string uuid, std::string ip, uint16_t port) {
@@ -122,8 +131,9 @@ void hub_service::connect_gate(std::string uuid, std::string ip, uint16_t port) 
 }
 
 void hub_service::reg_hub(std::string hub_ip, uint16_t hub_port) {
-	_hub_service->connect(hub_ip, hub_port, [this](std::shared_ptr<juggle::Ichannel> ch){
-		auto caller = std::make_shared< caller::hub_call_hub>(ch);
+	_hub_service->connect(hub_ip, hub_port, [this, hub_ip, hub_port](std::shared_ptr<juggle::Ichannel> ch){
+		spdlog::trace("hub ip:{0} port:{1} reg_hub", hub_ip, hub_port);
+ 		auto caller = std::make_shared< caller::hub_call_hub>(ch);
 		caller->reg_hub(name);
 	});
 }
@@ -165,20 +175,32 @@ void hub_service::poll() {
 			_hub_service->poll();
 			_center_service->poll();
 			_gate_service->poll();
-			_dbproxy_service->poll();
+
+			if (_dbproxy_service) {
+				_dbproxy_service->poll();
+			}
 
 			_timerservice->poll();
 
 			_juggleservice->poll();
 		}
 		catch (std::exception err) {
-			std::cout << "error:" << err.what() << std::endl;
+			spdlog::error("hub_service::poll error:{0}", err.what());
 		}
 
 		if (close_handle->is_closed) {
+			_centerproxy->closed();
 			_timerservice->addticktimer(2000, [](uint64_t timetmp) {
 				exit(0);
 			});
+		}
+		else {
+			auto _tmp_now = msec_time();
+			auto _tmp_time = _tmp_now - time_now;
+			time_now = _tmp_now;
+			if (_tmp_time < 50) {
+				Sleep(1);
+			}
 		}
 	}
 }

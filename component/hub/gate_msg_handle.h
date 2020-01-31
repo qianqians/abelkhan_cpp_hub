@@ -18,11 +18,11 @@
 namespace gate_msg{
 
 void reg_hub_sucess() {
-	std::cout << "connect gate sucess" << std::endl;
+	spdlog::trace("connect gate sucess");
 }
 
 void client_connect(std::shared_ptr<hub::gatemanager> gates, std::string client_uuid) {
-	std::cout << "client connect:" << client_uuid << std::endl;
+	spdlog::trace("client connect:{0}", client_uuid);
 	gates->client_connect(client_uuid, juggle::current_ch);
 }
 

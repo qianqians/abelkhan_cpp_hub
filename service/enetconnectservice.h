@@ -39,15 +39,18 @@ public:
 	void poll()
 	{
 		ENetEvent _event;
-		if (enet_host_service(_host, &_event, 0) > 0) {
+		if (enet_host_service(_host, &_event, 5) > 0) {
 			switch (_event.type)
 			{
 			case ENET_EVENT_TYPE_CONNECT:
 				{
-					char ip[256];
+					spdlog::trace("enetconnectservice connect begin!");
+
+					char ip[256] = {0};
 					enet_address_get_host_ip(&_event.peer->address, ip, 256);
 					std::string cb_handle = std::string(ip) + ":" + std::to_string(_event.peer->address.port);
 					auto cb = cbs[cb_handle];
+					spdlog::trace("enetconnectservice cb_handle:{0}", cb_handle);
 
 					uint64_t peerHandle = (uint64_t)_event.peer->address.host << 32 | _event.peer->address.port;
 					auto ch = std::make_shared<enetchannel>(_host, _event.peer);
@@ -56,14 +59,20 @@ public:
 
 					cb(ch);
 					cbs.erase(cb_handle);
+
+					spdlog::trace("enetconnectservice connect end!");
 				}
 				break;
 			case ENET_EVENT_TYPE_RECEIVE:
 				{
+					spdlog::trace("enetconnectservice recv begin!");
+					
 					uint64_t peerHandle = (uint64_t)_event.peer->address.host << 32 | _event.peer->address.port;
 					chs[peerHandle]->recv((char*)_event.packet->data, _event.packet->dataLength);
 
 					enet_packet_destroy(_event.packet);
+
+					spdlog::trace("enetconnectservice recv end!" );
 				}
 				break;
 			case ENET_EVENT_TYPE_DISCONNECT:

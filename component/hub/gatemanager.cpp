@@ -3,6 +3,7 @@
  * 2020-1-10
  * gatemanager.cpp
  */
+
 #include "gatemanager.h"
 #include "hub.h"
 
@@ -55,8 +56,9 @@ gatemanager::gatemanager(std::shared_ptr<service::enetconnectservice> _conn, std
 }
 
 void gatemanager::connect_gate(std::string uuid, std::string ip, uint16_t port) {
-	std::cout << "connect_gate ip:" << ip << " port:" << port << std::endl;
-	conn->connect(ip, port, [this, uuid](std::shared_ptr<juggle::Ichannel> ch) {
+	spdlog::trace("connect_gate ip:{0} port:{1}", ip, port);
+	conn->connect(ip, port, [this, ip, port, uuid](std::shared_ptr<juggle::Ichannel> ch) {
+		spdlog::trace("gate ip:{0}  port:{1} reg_hub", ip, port);
 		gates[uuid] = std::make_shared<gateproxy>(ch, _hub);
 		ch_gates[ch] = gates[uuid];
 		gates[uuid]->reg_hub();
@@ -68,11 +70,11 @@ void gatemanager::client_connect(std::string client_uuid, std::shared_ptr<juggle
 		return;
 	}
 
-	if (clients.find(client_uuid) == clients.end()) {
+	if (clients.find(client_uuid) != clients.end()) {
 		return;
 	}
 
-	std::cout << "reg client:" << client_uuid << std::endl;
+	spdlog::trace("reg client:{0}", client_uuid);
 
 	clients[client_uuid] = ch_gates[gate_ch];
 	clients[client_uuid]->connect_sucess(client_uuid);
@@ -85,7 +87,7 @@ void gatemanager::client_direct_connect(std::string client_uuid, std::shared_ptr
 		return;
 	}
 
-	std::cout << "reg direct client:" << client_uuid << std::endl;
+	spdlog::trace("reg direct client:{0}", client_uuid);
 
 	ch_uuid_direct_clients.insert(std::make_pair(direct_ch, client_uuid));
 
@@ -163,7 +165,7 @@ void gatemanager::call_group_client(std::vector<std::string> uuids, std::string 
 
 		array_uuid->push_back(uuid);
 
-		if (std::find(tmp_gates.begin(), tmp_gates.end(), it_gate->second) == tmp_gates.end()) {
+		if (std::find(tmp_gates.begin(), tmp_gates.end(), it_gate->second) != tmp_gates.end()) {
 			continue;
 		}
 

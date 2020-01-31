@@ -16,7 +16,7 @@ namespace center_msg {
 void reg_server_sucess(std::shared_ptr<hub::centerproxy> _centerproxy) {
 	_centerproxy->is_reg_sucess = true;
 
-	std::cout << "connect center server sucess" << std::endl;
+	spdlog::trace("connect center server sucess");
 }
 
 void close_server(std::shared_ptr<hub::closehandle> _closehandle) {

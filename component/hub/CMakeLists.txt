@@ -44,6 +44,11 @@ INCLUDE_DIRECTORIES(${config_header__PATH})
 
 file(GLOB config_header_files ../../config/ ../../config/*.h)
 
+set(log_header__PATH ..//..//log CACHE PATH "config include path")
+INCLUDE_DIRECTORIES(${log_header__PATH})
+
+file(GLOB log_header_files ../../log/ ../../log/*.h)
+
 set(service_header__PATH ..//..//service CACHE PATH "service include path")
 INCLUDE_DIRECTORIES(${service_header__PATH})
 
@@ -68,6 +73,7 @@ SET(header_files
     ${config_header_files}
     ${time_header_files}
     ${ce_header_files}
+    ${log_header_files}
 )
 
 SET(SRC_LIST 

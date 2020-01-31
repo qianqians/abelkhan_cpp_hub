@@ -7,12 +7,14 @@
 #ifndef _dbproxy_msg_handle_h
 #define _dbproxy_msg_handle_h
 
+#include <spdlog/spdlog.h>
+
 #include "dbproxyproxy.h"
 
 namespace db_msg {
 
 void reg_hub_sucess() {
-	std::cout << "connect db sucess" << std::endl;
+	spdlog::trace("connect db sucess");
 	//this.hub.onConnectDB_event();
 }
 

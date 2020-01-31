@@ -52,6 +52,8 @@
 [def __boost_quickbook__ [@http://www.boost.org/doc/libs/release/doc/html/quickbook.html Boost.Quickbook]]
 
 [template ticket[key] '''<ulink url="https://svn.boost.org/trac/boost/ticket/'''[key]'''">#'''[key]'''</ulink>''']
+[template github_issue[key] '''<ulink url="https://github.com/boostorg/log/issues/'''[key]'''">GH#'''[key]'''</ulink>''']
+[template pull_request[key] '''<ulink url="https://github.com/boostorg/log/pull/'''[key]'''">PR#'''[key]'''</ulink>''']
 
 [/ Auto-generated macros that refer to Reference sections /]
 [include tmp/top_level_reference.qbk]
@@ -108,6 +110,7 @@
 [import ../example/doc/util_dynamic_type_disp.cpp]
 [import ../example/doc/util_manip_to_log.cpp]
 [import ../example/doc/util_ipc_reliable_mq_writer.cpp]
+[import ../example/doc/util_setup_settings.cpp]
 [import ../example/doc/extension_stat_collector.cpp]
 [import ../example/doc/extension_app_launcher.cpp]
 [import ../example/doc/extension_record_tagger.cpp]
@@ -252,6 +255,8 @@ The library provides the `BOOST_LOG_USE_COMPILER_TLS` configuration macro that a
 * The application must not use logging in global constructors or destructors.
 
 Note that the `BOOST_LOG_USE_COMPILER_TLS` macro only controls use of TLS in Boost.Log but not in other libraries used by Boost.Log. For example, __boost_asio__ uses compiler-supplied TLS by default. In order to build Boost.Log binaries completely free from use of compiler-supplied TLS, this feature has to be disabled in those other libraries as well (in case of __boost_asio__ this can be achieved by defining `BOOST_ASIO_DISABLE_THREAD_KEYWORD_EXTENSION` when building and using Boost).
+
+Also note that enabling builtin compiler support for TLS does not remove the dependency on __boost_thread__ or lower level OS threading primitives, including those implementing TLS. The purpose of using compiler intrinsics for TLS is better performance rather than reducing dependencies.
 
 [heading Notes about native `wchar_t` support]
 

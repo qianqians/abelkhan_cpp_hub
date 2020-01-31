@@ -23,7 +23,7 @@ void reg_hub(std::shared_ptr<hub::hubsvrmanager> hubs, std::string hub_name) {
 }
 
 void reg_hub_sucess() {
-	std::cout << "connect hub sucess" << std::endl;
+	spdlog::trace("connect hub sucess");
 }
 
 void hub_call_hub_mothed(std::shared_ptr<hub::hub_service> _hub, std::string module_name, std::string func_name, Fossilizid::JsonParse::JsonArray argvs) {

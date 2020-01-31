@@ -11,6 +11,8 @@
 #include <unordered_map>
 #include <iostream>
 
+#include <spdlog/spdlog.h>
+
 #include <JsonParse.h>
 
 #include "Ichannel.h"
@@ -30,7 +32,7 @@ public:
 			func->second(std::any_cast<Fossilizid::JsonParse::JsonArray>((*_event)[2]));
 		}
 		else {
-			std::cout << "can not find function named:" << func_name << std::endl;
+			spdlog::error("can not find function named:{0}", func_name);
 		}
 
 		current_ch = nullptr;

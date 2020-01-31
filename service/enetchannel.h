@@ -6,6 +6,7 @@
 #include <iostream>
 #include <any>
 
+#include <spdlog/spdlog.h>
 #include <enet/enet.h>
 
 #include "JsonParse.h"
@@ -32,7 +33,8 @@ public:
 
 	void recv(char * data, size_t length)
 	{
-		uint32_t len = (uint32_t)data[0] | ((uint32_t)data[1] << 8) | ((uint32_t)data[2] << 16) | ((uint32_t)data[3] << 24);
+		uint8_t* tmp = (uint8_t*)data;
+		uint32_t len = (uint32_t)tmp[0] | ((uint32_t)tmp[1] << 8) | ((uint32_t)tmp[2] << 16) | ((uint32_t)tmp[3] << 24);
 
 		if ((len + 4) <= length)
 		{
@@ -40,13 +42,14 @@ public:
 			std::string json_str((char*)(json_buff), len);
 			try
 			{
+				spdlog::trace("recv:{0}", json_str);
 				Fossilizid::JsonParse::JsonObject obj;
 				Fossilizid::JsonParse::unpacker(obj, json_str);
 				que.push_back(std::any_cast<Fossilizid::JsonParse::JsonArray>(obj));
 			}
 			catch (Fossilizid::JsonParse::jsonformatexception e)
 			{
-				std::cout << "error:" << json_str << std::endl;
+				spdlog::error("enetchannel recv error:{0}", json_str);
 				disconnect();
 
 				return;
@@ -82,14 +85,16 @@ public:
 			memcpy(&_data[4], data.c_str(), data.size());
 			size_t datasize = len + 4;
 
-			ENetPacket* packet = enet_packet_create(_data, len, ENET_PACKET_FLAG_RELIABLE);
+			ENetPacket* packet = enet_packet_create(_data, datasize, ENET_PACKET_FLAG_RELIABLE);
 			enet_peer_send(_peer, 0, packet);
 			enet_host_flush(_host);
+
+			spdlog::trace("push:{0}", data);
 
 			delete[] _data;
 		}
 		catch (std::exception e) {
-			std::cout << "error:" << e.what() << std::endl;
+			spdlog::error("enetchannel push exception error:{0}", e.what());
 		}
 	}
 

@@ -70,6 +70,14 @@ class strategy::side::geographic
 
 ]
 ]
+[[``equals_point_point_strategy_type get_equals_point_point_strategy()``
+
+] [] [
+
+][
+
+]
+]
 [[``template<typename P1, typename P2, typename P>
 int apply(P1 const & p1, P2 const & p2, P const & p)``
 
@@ -80,6 +88,14 @@ int apply(P1 const & p1, P2 const & p2, P const & p)``
 [* P const &]: ['p]:  
 
 
+
+][
+
+]
+]
+[[``Spheroid const  & model()``
+
+] [] [
 
 ][
 

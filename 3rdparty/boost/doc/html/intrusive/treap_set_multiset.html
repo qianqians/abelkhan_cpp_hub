@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../intrusive.html" title="Chapter&#160;18.&#160;Boost.Intrusive">
+<link rel="up" href="../intrusive.html" title="Chapter&#160;19.&#160;Boost.Intrusive">
 <link rel="prev" href="sg_set_multiset.html" title="Intrusive scapegoat tree based associative containers: sg_set, sg_multiset and sgtree">
 <link rel="next" href="bst_hooks.html" title="Binary search tree hooks: bs_set_base_hook and bs_set_member_hook">
 </head>
@@ -140,11 +140,16 @@
             <span class="special">&gt;</span></code>
           </li>
 <li class="listitem">
+            <span class="bold"><strong><code class="computeroutput"><span class="identifier">priority_of_value</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">PriorityOfValue</span><span class="special">&gt;</span></code></strong></span>:
+            A function object that specifies the type of the priority (<code class="computeroutput"><span class="identifier">priority_type</span></code>) of a treap container
+            and an operator to obtain it from a value type. Default: <code class="computeroutput"><span class="identifier">priority_type</span></code> is equal to <code class="computeroutput"><span class="identifier">value_type</span></code> (set-like interface).
+          </li>
+<li class="listitem">
             <span class="bold"><strong><code class="computeroutput"><span class="identifier">priority</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">PriorityCompare</span><span class="special">&gt;</span></code></strong></span>:
             Priority Comparison function for the objects to be inserted in containers.
             The comparison functor must induce a strict weak ordering. Default:
             <code class="computeroutput"><span class="identifier">priority</span><span class="special">&lt;</span>
-            <span class="identifier">priority_compare</span><span class="special">&lt;</span><span class="identifier">key_type</span><span class="special">&gt;</span>
+            <span class="identifier">priority_compare</span><span class="special">&lt;</span><span class="identifier">priority_type</span><span class="special">&gt;</span>
             <span class="special">&gt;</span></code>
           </li>
 <li class="listitem">

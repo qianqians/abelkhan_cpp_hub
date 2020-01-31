@@ -30,12 +30,13 @@ public:
 		std::stringstream buffer;
 		buffer << fs.rdbuf();
 		std::string buff(buffer.str());
+		fs.close();
 
 		try{ 
 			Fossilizid::JsonParse::unpacker(handle, buff);
 		}
 		catch (Fossilizid::JsonParse::jsonformatexception e) {
-			std::cout << buff << std::endl;
+			spdlog::error(buff);
 		}
 	}
 	
@@ -53,7 +54,7 @@ private:
 
 public:
 	bool has_key(std::string key) {
-		return (Fossilizid::JsonParse::JsonCast<Fossilizid::JsonParse::JsonTable>(handle))->find(key) == (Fossilizid::JsonParse::JsonCast<Fossilizid::JsonParse::JsonTable>(handle))->end();
+		return (Fossilizid::JsonParse::JsonCast<Fossilizid::JsonParse::JsonTable>(handle))->find(key) != (Fossilizid::JsonParse::JsonCast<Fossilizid::JsonParse::JsonTable>(handle))->end();
 	}
 
 	bool get_value_bool(std::string key) {

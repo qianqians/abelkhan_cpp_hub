@@ -63,7 +63,15 @@ class strategy::distance::cross_track
 [heading Member Function(s)]
 [table
 [[Function] [Description] [Parameters]  [Returns]]
-[[``Strategy get_distance_strategy()``
+[[``relate_segment_segment_strategy_type get_relate_segment_segment_strategy()``
+
+] [] [
+
+][
+
+]
+]
+[[``point_in_geometry_strategy_type get_point_in_geometry_strategy()``
 
 ] [] [
 
@@ -79,6 +87,19 @@ return_type< Point, PointOfSegment >::type apply(Point const & p, PointOfSegment
 [* PointOfSegment const &]: ['sp1]:  
 
 [* PointOfSegment const &]: ['sp2]:  
+
+
+
+][
+
+]
+]
+[[``template<typename T1, typename T2>
+radius_type vertical_or_meridian(T1 lat1, T2 lat2)``
+
+] [] [[* T1]: ['lat1]:  
+
+[* T2]: ['lat2]:  
 
 
 

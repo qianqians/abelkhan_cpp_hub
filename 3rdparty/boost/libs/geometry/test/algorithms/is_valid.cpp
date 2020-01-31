@@ -1,7 +1,7 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 // Unit Test
 
-// Copyright (c) 2014-2015, Oracle and/or its affiliates.
+// Copyright (c) 2014-2018, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
@@ -345,6 +345,11 @@ inline void test_open_rings()
 
     // wrong orientation
     test::apply("r33", "POLYGON((0 0,0 1,1 1))", false);
+
+    // Normal case, plus spikes formed in two different ways
+    test::apply("r34", "POLYGON((0 0,4 0,4 4,0 4,0 0))", true);
+    test::apply("r35", "POLYGON((0 0,5 0,4 0,4 4,0 4,0 0))", false);
+    test::apply("r36", "POLYGON((0 0,4 0,4 -1,4 4,0 4,0 0))", false);
 }
 
 
@@ -869,6 +874,9 @@ inline void test_open_multipolygons()
     test::apply("mpg09",
                 "MULTIPOLYGON(((0 0,10 0,10 10,0 10)),((0 0,9 1,9 2)))",
                 false);
+    test::apply("mpg09_2",
+                "MULTIPOLYGON(((0 0,5 1,10 0,10 10,0 10)),((1 1,9 1,9 2)))",
+                false);
 
     // one polygon inside another and boundaries not touching
     test::apply("mpg10",
@@ -1001,7 +1009,7 @@ inline void test_open_multipolygons()
     }
 
     // MySQL report 30.06.2015
-#ifdef BOOST_GEOMETRY_TEST_ENABLE_FAILING
+#ifdef BOOST_GEOMETRY_TEST_FAILURES
     {
         std::string wkt = "MULTIPOLYGON(((153.60036248974487 -86.4072234353084,134.8924761503673 -92.0821987136617,151.87887755950274 -92.0821987136617,153.60036248974487 -86.4072234353084)),((-162.3619975827558 -20.37135271519032,-170.42498886764488 -34.35970444494861,-168.21072335866987 -37.67358696575207,-162.3619975827558 -20.37135271519032)),((25.982352329146433 -1.793573272167862,25.81900562736861 -2.0992322130216032,24.216310496207715 -2.737558757030656,25.9822948153016 -1.7936204725604972,25.982352329146433 -1.793573272167862)))";
 
@@ -1192,7 +1200,7 @@ inline void test_open_multipolygons()
 
         BOOST_CHECK_MESSAGE(bg::is_valid(mpoly, msg), msg);
     }
-#endif // BOOST_GEOMETRY_TEST_ENABLE_FAILING
+#endif // BOOST_GEOMETRY_TEST_FAILURES
 }
 
 BOOST_AUTO_TEST_CASE( test_is_valid_multipolygon )

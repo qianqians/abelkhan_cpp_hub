@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////
 //  Copyright 2012 John Maddock. Distributed under the Boost
 //  Software License, Version 1.0. (See accompanying file
-//  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_
+//  LICENSE_1_0.txt or copy at https://www.boost.org/LICENSE_1_0.txt
 
 //
 // Compare arithmetic results using fixed_int to GMP results.
@@ -23,7 +23,9 @@
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/binary_iarchive.hpp>
+#include <boost/archive/xml_iarchive.hpp>
 #include <boost/archive/binary_oarchive.hpp>
+#include <boost/archive/xml_oarchive.hpp>
 #include <boost/exception/all.hpp>
 
 template <class T>
@@ -114,20 +116,34 @@ void test()
       try
       {
 #endif
-         std::stringstream ss;
-         boost::archive::text_oarchive oa(ss);
-         oa << static_cast<const T&>(val);
-         boost::archive::text_iarchive ia(ss);
          T val2;
-         ia >> val2;
-         BOOST_CHECK_EQUAL(val, val2);
+         {
+            std::stringstream ss;
+            boost::archive::text_oarchive oa(ss);
+            oa << static_cast<const T&>(val);
+            boost::archive::text_iarchive ia(ss);
+            ia >> val2;
+            BOOST_CHECK_EQUAL(val, val2);
+         }
+         {
+            std::stringstream ss;
+            boost::archive::binary_oarchive ob(ss);
+            ob << static_cast<const T&>(val);
+            boost::archive::binary_iarchive ib(ss);
+            ib >> val2;
+            BOOST_CHECK_EQUAL(val, val2);
+         }
+         {
+            std::stringstream ss;
+            {
+               boost::archive::xml_oarchive oc(ss);
+               oc << boost::serialization::make_nvp("value", static_cast<const T&>(val));
+            }
+            boost::archive::xml_iarchive ic(ss);
+            ic >> boost::serialization::make_nvp("value", val2);
+            BOOST_CHECK_EQUAL(val, val2);
+         }
 
-         ss.clear();
-         boost::archive::binary_oarchive ob(ss);
-         ob << static_cast<const T&>(val);
-         boost::archive::binary_iarchive ib(ss);
-         ib >> val2;
-         BOOST_CHECK_EQUAL(val, val2);
 #ifndef BOOST_NO_EXCEPTIONS
       }
       catch(const boost::exception& e)

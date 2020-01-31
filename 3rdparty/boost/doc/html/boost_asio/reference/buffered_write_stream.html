@@ -190,12 +190,10 @@ class buffered_write_stream :
                 <p>
                   Flush all data from the buffer to the next layer. Returns the number
                   of bytes written to the next layer on the last write operation.
-                  Throws an exception on failure.
-                </p>
-                <p>
-                  Flush all data from the buffer to the next layer. Returns the number
-                  of bytes written to the next layer on the last write operation,
-                  or 0 if an error occurred.
+                  Throws an exception on failure. <br> <span class="silver"> &#8212;</span><br> Flush all data from
+                  the buffer to the next layer. Returns the number of bytes written
+                  to the next layer on the last write operation, or 0 if an error
+                  occurred.
                 </p>
               </td>
 </tr>
@@ -208,32 +206,6 @@ class buffered_write_stream :
 <td>
                 <p>
                   Get the executor associated with the object.
-                </p>
-              </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  <a class="link" href="buffered_write_stream/get_io_context.html" title="buffered_write_stream::get_io_context"><span class="bold"><strong>get_io_context</strong></span></a>
-                </p>
-              </td>
-<td>
-                <p>
-                  (Deprecated: Use get_executor().) Get the io_context associated
-                  with the object.
-                </p>
-              </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  <a class="link" href="buffered_write_stream/get_io_service.html" title="buffered_write_stream::get_io_service"><span class="bold"><strong>get_io_service</strong></span></a>
-                </p>
-              </td>
-<td>
-                <p>
-                  (Deprecated: Use get_executor().) Get the io_context associated
-                  with the object.
                 </p>
               </td>
 </tr>
@@ -257,10 +229,8 @@ class buffered_write_stream :
               </td>
 <td>
                 <p>
-                  Get a reference to the lowest layer.
-                </p>
-                <p>
-                  Get a const reference to the lowest layer.
+                  Get a reference to the lowest layer. <br> <span class="silver"> &#8212;</span><br> Get a const
+                  reference to the lowest layer.
                 </p>
               </td>
 </tr>
@@ -285,11 +255,9 @@ class buffered_write_stream :
 <td>
                 <p>
                   Peek at the incoming data on the stream. Returns the number of
-                  bytes read. Throws an exception on failure.
-                </p>
-                <p>
-                  Peek at the incoming data on the stream. Returns the number of
-                  bytes read, or 0 if an error occurred.
+                  bytes read. Throws an exception on failure. <br> <span class="silver"> &#8212;</span><br> Peek
+                  at the incoming data on the stream. Returns the number of bytes
+                  read, or 0 if an error occurred.
                 </p>
               </td>
 </tr>
@@ -302,11 +270,8 @@ class buffered_write_stream :
 <td>
                 <p>
                   Read some data from the stream. Returns the number of bytes read.
-                  Throws an exception on failure.
-                </p>
-                <p>
-                  Read some data from the stream. Returns the number of bytes read
-                  or 0 if an error occurred.
+                  Throws an exception on failure. <br> <span class="silver"> &#8212;</span><br> Read some data from
+                  the stream. Returns the number of bytes read or 0 if an error occurred.
                 </p>
               </td>
 </tr>
@@ -319,12 +284,9 @@ class buffered_write_stream :
 <td>
                 <p>
                   Write the given data to the stream. Returns the number of bytes
-                  written. Throws an exception on failure.
-                </p>
-                <p>
-                  Write the given data to the stream. Returns the number of bytes
-                  written, or 0 if an error occurred and the error handler did not
-                  throw.
+                  written. Throws an exception on failure. <br> <span class="silver"> &#8212;</span><br> Write the
+                  given data to the stream. Returns the number of bytes written,
+                  or 0 if an error occurred and the error handler did not throw.
                 </p>
               </td>
 </tr>
@@ -393,7 +355,7 @@ class buffered_write_stream :
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2003-2018 Christopher M. Kohlhoff<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2003-2019 Christopher M. Kohlhoff<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

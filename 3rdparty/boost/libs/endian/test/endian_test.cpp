@@ -102,7 +102,7 @@ namespace
   template <class Endian>
   inline void verify_native_representation( int line )
   {
-#   ifdef BOOST_BIG_ENDIAN
+#   if BOOST_ENDIAN_BIG_BYTE
       verify_representation<Endian>( true, line );
 #   else
       verify_representation<Endian>( false, line );
@@ -124,8 +124,8 @@ namespace
     if ( memcmp( v.c, "\x8\7\6\5\4\3\2\1", 8) == 0 )
     {
       cout << "This machine is little-endian.\n";
-  #   ifndef BOOST_LITTLE_ENDIAN
-        cout << "yet boost/detail/endian.hpp does not define BOOST_LITTLE_ENDIAN.\n"
+  #   if !BOOST_ENDIAN_LITTLE_BYTE
+        cout << "yet boost/predef/other/endian.h does not define BOOST_ENDIAN_LITTLE_BYTE.\n"
           "The Boost Endian library must be revised to work correctly on this system.\n"
           "Please report this problem to the Boost mailing list.\n";
         exit(1);
@@ -134,8 +134,8 @@ namespace
     else if ( memcmp( v.c, "\1\2\3\4\5\6\7\x8", 8) == 0 )
     {
       cout << "This machine is big-endian.\n";
-  #   ifndef BOOST_BIG_ENDIAN
-        cout << "yet boost/detail/endian.hpp does not define BOOST_BIG_ENDIAN.\n"
+  #   if !BOOST_ENDIAN_BIG_BYTE
+        cout << "yet boost/predef/other/endian.h does not define BOOST_ENDIAN_BIG_BYTE.\n"
           "The Boost Endian library must be revised to work correctly on this system.\n"
           "Please report this problem to the Boost mailing list.\n";
         exit(1);
@@ -732,11 +732,13 @@ namespace
 
   } // check_representation_and_range
 
+/*
+
   class MyInt
   {
     int32_t mx;
   public:
-    MyInt(int32_t x) : mx(x) {}
+    MyInt(int32_t x = 0) : mx(x) {}
     operator int32_t() const {return mx;}
 
     //friend int32_t operator+(const MyInt& x) {return x;}
@@ -760,6 +762,27 @@ namespace
     cout << "v is " << +v << endl;
 //    cout << "v+v is " << +(v+v) << endl;
   }
+
+  void check_udt_le()
+  {
+    typedef boost::endian::endian_arithmetic< order::little, MyInt, 32 >  mylittle_int32_ut;
+
+    mylittle_int32_ut v(10);
+    cout << "+v is " << +v << endl;
+    v += 1;
+    cout << "v is " << +v << endl;
+    v -= 2;
+    cout << "v is " << +v << endl;
+    v *= 2;
+    cout << "v is " << +v << endl;
+    ++v;
+    cout << "v is " << +v << endl;
+    --v;
+    cout << "v is " << +v << endl;
+//    cout << "v+v is " << +(v+v) << endl;
+  }
+
+*/
 
   long iterations = 10000;
 
@@ -800,7 +823,8 @@ int cpp_main( int argc, char * argv[] )
   check_alignment();
   check_representation_and_range_and_ops();
   check_data();
-  check_udt();
+  //check_udt();
+  //check_udt_le();
 
   //timing_test<big_int32_t> ( "big_int32_t" );
   //timing_test<big_int32_at>( "big_int32_at" );

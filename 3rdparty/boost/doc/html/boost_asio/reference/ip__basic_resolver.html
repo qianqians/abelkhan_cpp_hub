@@ -30,7 +30,8 @@
         Provides endpoint resolution functionality.
       </p>
 <pre class="programlisting">template&lt;
-    typename <a class="link" href="InternetProtocol.html" title="Internet protocol requirements">InternetProtocol</a>&gt;
+    typename <a class="link" href="InternetProtocol.html" title="Internet protocol requirements">InternetProtocol</a>,
+    typename <a class="link" href="Executor1.html" title="Executor requirements">Executor</a>&gt;
 class basic_resolver :
   public ip::resolver_base
 </pre>
@@ -173,16 +174,11 @@ class basic_resolver :
               </td>
 <td>
                 <p>
-                  (Deprecated.) Asynchronously perform forward resolution of a query
-                  to a list of entries.
-                </p>
-                <p>
+                  (Deprecated: Use overload with separate host and service parameters.)
                   Asynchronously perform forward resolution of a query to a list
-                  of entries.
-                </p>
-                <p>
-                  Asynchronously perform reverse resolution of an endpoint to a list
-                  of entries.
+                  of entries. <br> <span class="silver"> &#8212;</span><br> Asynchronously perform forward resolution
+                  of a query to a list of entries. <br> <span class="silver"> &#8212;</span><br> Asynchronously perform
+                  reverse resolution of an endpoint to a list of entries.
                 </p>
               </td>
 </tr>
@@ -194,10 +190,8 @@ class basic_resolver :
               </td>
 <td>
                 <p>
-                  Constructor.
-                </p>
-                <p>
-                  Move-construct a basic_resolver from another.
+                  Construct with executor. <br> <span class="silver"> &#8212;</span><br> Construct with execution
+                  context. <br> <span class="silver"> &#8212;</span><br> Move-construct a basic_resolver from another.
                 </p>
               </td>
 </tr>
@@ -228,32 +222,6 @@ class basic_resolver :
 <tr>
 <td>
                 <p>
-                  <a class="link" href="ip__basic_resolver/get_io_context.html" title="ip::basic_resolver::get_io_context"><span class="bold"><strong>get_io_context</strong></span></a>
-                </p>
-              </td>
-<td>
-                <p>
-                  (Deprecated: Use get_executor().) Get the io_context associated
-                  with the object.
-                </p>
-              </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  <a class="link" href="ip__basic_resolver/get_io_service.html" title="ip::basic_resolver::get_io_service"><span class="bold"><strong>get_io_service</strong></span></a>
-                </p>
-              </td>
-<td>
-                <p>
-                  (Deprecated: Use get_executor().) Get the io_context associated
-                  with the object.
-                </p>
-              </td>
-</tr>
-<tr>
-<td>
-                <p>
                   <a class="link" href="ip__basic_resolver/operator_eq_.html" title="ip::basic_resolver::operator="><span class="bold"><strong>operator=</strong></span></a>
                 </p>
               </td>
@@ -271,14 +239,11 @@ class basic_resolver :
               </td>
 <td>
                 <p>
-                  (Deprecated.) Perform forward resolution of a query to a list of
-                  entries.
-                </p>
-                <p>
-                  Perform forward resolution of a query to a list of entries.
-                </p>
-                <p>
-                  Perform reverse resolution of an endpoint to a list of entries.
+                  (Deprecated: Use overload with separate host and service parameters.)
+                  Perform forward resolution of a query to a list of entries. <br>
+                  <span class="silver"> &#8212;</span><br> Perform forward resolution of a query to a list of entries.
+                  <br> <span class="silver"> &#8212;</span><br> Perform reverse resolution of an endpoint to a list
+                  of entries.
                 </p>
               </td>
 </tr>
@@ -437,7 +402,7 @@ class basic_resolver :
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2003-2018 Christopher M. Kohlhoff<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2003-2019 Christopher M. Kohlhoff<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

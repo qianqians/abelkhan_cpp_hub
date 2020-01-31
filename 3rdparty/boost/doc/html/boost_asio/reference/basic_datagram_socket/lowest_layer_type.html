@@ -35,7 +35,7 @@ A
           <a class="link" href="../basic_socket.html" title="basic_socket"><code class="computeroutput">basic_socket</code></a>
           is always the lowest layer.
         </p>
-<pre class="programlisting">typedef basic_socket&lt; Protocol &gt; lowest_layer_type;
+<pre class="programlisting">typedef basic_socket&lt; Protocol, Executor &gt; lowest_layer_type;
 </pre>
 <h6>
 <a name="boost_asio.reference.basic_datagram_socket.lowest_layer_type.h0"></a>
@@ -59,6 +59,18 @@ A
                 </th>
 </tr></thead>
 <tbody>
+<tr>
+<td>
+                  <p>
+                    <a class="link" href="../basic_socket__rebind_executor.html" title="basic_socket::rebind_executor"><span class="bold"><strong>rebind_executor</strong></span></a>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Rebinds the socket type to another executor.
+                  </p>
+                </td>
+</tr>
 <tr>
 <td>
                   <p>
@@ -409,24 +421,13 @@ A
                 </td>
 <td>
                   <p>
-                    Construct a basic_socket without opening it.
-                  </p>
-                  <p>
-                    Construct and open a basic_socket.
-                  </p>
-                  <p>
-                    Construct a basic_socket, opening it and binding it to the given
-                    local endpoint.
-                  </p>
-                  <p>
-                    Construct a basic_socket on an existing native socket.
-                  </p>
-                  <p>
-                    Move-construct a basic_socket from another.
-                  </p>
-                  <p>
-                    Move-construct a basic_socket from a socket of another protocol
-                    type.
+                    Construct a basic_socket without opening it. <br> <span class="silver"> &#8212;</span><br> Construct
+                    and open a basic_socket. <br> <span class="silver"> &#8212;</span><br> Construct a basic_socket,
+                    opening it and binding it to the given local endpoint. <br>
+                    <span class="silver"> &#8212;</span><br> Construct a basic_socket on an existing native socket.
+                    <br> <span class="silver"> &#8212;</span><br> Move-construct a basic_socket from another. <br>
+                    <span class="silver"> &#8212;</span><br> Move-construct a basic_socket from a socket of another
+                    protocol type.
                   </p>
                 </td>
 </tr>
@@ -493,32 +494,6 @@ A
 <tr>
 <td>
                   <p>
-                    <a class="link" href="../basic_socket/get_io_context.html" title="basic_socket::get_io_context"><span class="bold"><strong>get_io_context</strong></span></a>
-                  </p>
-                </td>
-<td>
-                  <p>
-                    (Deprecated: Use get_executor().) Get the io_context associated
-                    with the object.
-                  </p>
-                </td>
-</tr>
-<tr>
-<td>
-                  <p>
-                    <a class="link" href="../basic_socket/get_io_service.html" title="basic_socket::get_io_service"><span class="bold"><strong>get_io_service</strong></span></a>
-                  </p>
-                </td>
-<td>
-                  <p>
-                    (Deprecated: Use get_executor().) Get the io_context associated
-                    with the object.
-                  </p>
-                </td>
-</tr>
-<tr>
-<td>
-                  <p>
                     <a class="link" href="../basic_socket/get_option.html" title="basic_socket::get_option"><span class="bold"><strong>get_option</strong></span></a>
                   </p>
                 </td>
@@ -572,10 +547,8 @@ A
                 </td>
 <td>
                   <p>
-                    Get a reference to the lowest layer.
-                  </p>
-                  <p>
-                    Get a const reference to the lowest layer.
+                    Get a reference to the lowest layer. <br> <span class="silver"> &#8212;</span><br> Get a const
+                    reference to the lowest layer.
                   </p>
                 </td>
 </tr>
@@ -600,9 +573,8 @@ A
 <td>
                   <p>
                     Gets the non-blocking mode of the native socket implementation.
-                  </p>
-                  <p>
-                    Sets the non-blocking mode of the native socket implementation.
+                    <br> <span class="silver"> &#8212;</span><br> Sets the non-blocking mode of the native socket
+                    implementation.
                   </p>
                 </td>
 </tr>
@@ -614,10 +586,8 @@ A
                 </td>
 <td>
                   <p>
-                    Gets the non-blocking mode of the socket.
-                  </p>
-                  <p>
-                    Sets the non-blocking mode of the socket.
+                    Gets the non-blocking mode of the socket. <br> <span class="silver"> &#8212;</span><br> Sets
+                    the non-blocking mode of the socket.
                   </p>
                 </td>
 </tr>
@@ -641,11 +611,8 @@ A
                 </td>
 <td>
                   <p>
-                    Move-assign a basic_socket from another.
-                  </p>
-                  <p>
-                    Move-assign a basic_socket from a socket of another protocol
-                    type.
+                    Move-assign a basic_socket from another. <br> <span class="silver"> &#8212;</span><br> Move-assign
+                    a basic_socket from a socket of another protocol type.
                   </p>
                 </td>
 </tr>
@@ -845,13 +812,45 @@ A
 </tr>
 </tbody>
 </table></div>
+<h6>
+<a name="boost_asio.reference.basic_datagram_socket.lowest_layer_type.h4"></a>
+          <span class="phrase"><a name="boost_asio.reference.basic_datagram_socket.lowest_layer_type.protected_data_members"></a></span><a class="link" href="lowest_layer_type.html#boost_asio.reference.basic_datagram_socket.lowest_layer_type.protected_data_members">Protected
+          Data Members</a>
+        </h6>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                  <p>
+                    Name
+                  </p>
+                </th>
+<th>
+                  <p>
+                    Description
+                  </p>
+                </th>
+</tr></thead>
+<tbody><tr>
+<td>
+                  <p>
+                    <a class="link" href="../basic_socket/impl_.html" title="basic_socket::impl_"><span class="bold"><strong>impl_</strong></span></a>
+                  </p>
+                </td>
+<td>
+                </td>
+</tr></tbody>
+</table></div>
 <p>
           The <a class="link" href="../basic_socket.html" title="basic_socket"><code class="computeroutput">basic_socket</code></a>
           class template provides functionality that is common to both stream-oriented
           and datagram-oriented sockets.
         </p>
 <h6>
-<a name="boost_asio.reference.basic_datagram_socket.lowest_layer_type.h4"></a>
+<a name="boost_asio.reference.basic_datagram_socket.lowest_layer_type.h5"></a>
           <span class="phrase"><a name="boost_asio.reference.basic_datagram_socket.lowest_layer_type.thread_safety"></a></span><a class="link" href="lowest_layer_type.html#boost_asio.reference.basic_datagram_socket.lowest_layer_type.thread_safety">Thread
           Safety</a>
         </h6>
@@ -862,7 +861,7 @@ A
           <span class="emphasis"><em>Shared</em></span> <span class="emphasis"><em>objects:</em></span> Unsafe.
         </p>
 <h6>
-<a name="boost_asio.reference.basic_datagram_socket.lowest_layer_type.h5"></a>
+<a name="boost_asio.reference.basic_datagram_socket.lowest_layer_type.h6"></a>
           <span class="phrase"><a name="boost_asio.reference.basic_datagram_socket.lowest_layer_type.requirements"></a></span><a class="link" href="lowest_layer_type.html#boost_asio.reference.basic_datagram_socket.lowest_layer_type.requirements">Requirements</a>
         </h6>
 <p>
@@ -874,7 +873,7 @@ A
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2003-2018 Christopher M. Kohlhoff<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2003-2019 Christopher M. Kohlhoff<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

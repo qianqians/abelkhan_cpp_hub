@@ -120,8 +120,9 @@ comments regarding support for Hana:
 Compiler/Toolchain | Status
 ------------------ | ------
 Clang >= 3.5.0     | Fully working; tested on each push to GitHub
-Xcode >= 6.3       | Fully working; tested on each push to GitHub
+Xcode >= 8.3       | Fully working; tested on each push to GitHub
 GCC >= 6.0.0       | Fully working; tested on each push to GitHub
+VS2017 >= Update 7 | Fully working; tested on each push to GitHub
 
 More specifically, Hana requires a compiler/standard library supporting the
 following C++14 features (non-exhaustively):
@@ -845,7 +846,7 @@ constexpr auto operator"" _c() {
   // parse the digits and return an integral_constant
 }
 
-auto three = 1_c + 3_c;
+auto three = 1_c + 2_c;
 @endcode
 
 Hana provides its own `integral_constant`s, which define arithmetic operators
@@ -859,7 +860,7 @@ your namespace before using it:
 @code{cpp}
 using namespace hana::literals;
 
-auto three = 1_c + 3_c;
+auto three = 1_c + 2_c;
 @endcode
 
 This way, you may do compile-time arithmetic without having to struggle with
@@ -1401,7 +1402,7 @@ looked like:
 @code{cpp}
 template <typename T>
 constexpr auto add_pointer(hana::basic_type<T> const&) {
-  return hana::type<T*>;
+  return hana::type_c<T*>;
 }
 @endcode
 
@@ -1505,8 +1506,7 @@ and simplifying many tasks.
 
 @note
 Curious or skeptical readers should consider checking the minimal
-reimplementation of the MPL presented in the [appendices]
-(@ref tutorial-appendix-MPL).
+reimplementation of the MPL presented in the appendices.
 
 
 
@@ -1703,7 +1703,7 @@ that type and cast it to `void`, for the same reason as we did for non-static
 members.
 
 
-@subsubsection tutorial-introspection-is_valid-typename Nested type names
+@subsubsection tutorial-introspection-is_valid-nested-typename Nested type names
 
 Checking for a nested type name is not hard, but it is slightly more
 convoluted than the previous cases:
@@ -1716,13 +1716,28 @@ support types that can't be returned from functions, like array types or
 incomplete types.
 
 
-@subsubsection tutorial-introspection-is_valid-template Nested templates
+@subsubsection tutorial-introspection-is_valid-nested-template Nested templates
 
 Checking for a nested template name is similar to checking for a nested type
 name, except we use the `template_<...>` variable template instead of
 `type<...>` in the generic lambda:
 
 @snippet example/tutorial/introspection.cpp nested_template
+
+
+@subsubsection tutorial-introspection-is_valid-template Template specializations
+
+Checking whether a template specialization is valid can be done too, but we
+now pass a `template_<...>` to `is_valid` instead of a `type<...>`, because
+that's what we want to make the check on:
+
+@snippet example/tutorial/introspection.cpp template_specialization
+
+@note
+Doing this will not cause the template to be instantiated. Hence, it will only
+check whether the given template can be mentioned with the provided template
+arguments, not whether the instantiation of the template with those arguments
+is valid. Generally speaking, there is no way to check that programmatically.
 
 
 @subsection tutorial-introspection-sfinae Taking control of SFINAE
@@ -2024,7 +2039,10 @@ a container unspecified; they are explained in the
 [rationales](@ref tutorial-rationales-container_representation).
 When the representation of a container is implementation-defined, one must
 be careful not to make any assumptions about it, unless those assumption
-are explicitly allowed in the documentation of the container.
+are explicitly allowed in the documentation of the container. For example,
+assuming that one can safely inherit from a container or that the elements
+in the container are stored in the same order as specified in its template
+argument list is generally not safe.
 
 
 @subsubsection tutorial-containers-types-overloading Overloading on container types
@@ -2817,9 +2835,12 @@ very useful for porting existing code from e.g. Fusion/MPL to Hana:
 @snippet example/tutorial/ext/fusion_to_hana.cpp main
 
 @note
-At this time, only adapters to use data types from other libraries inside Hana
-are provided; adapters for the other way around (using Hana containers inside
-other libraries) are not provided.
+- At this time, only adapters to use data types from other libraries inside Hana
+  are provided; adapters for the other way around (using Hana containers inside
+  other libraries) are not provided.
+
+- The Fusion and MPL adapters are only guaranteed to work on the version of
+  Boost matching the version of Hana being used.
 
 However, using external adapters has a couple of pitfalls. For example, after
 a while using Hana, you might become used to comparing Hana tuples using the
@@ -3375,13 +3396,13 @@ some container defines what algorithms can be used with such a container.
 More specifically, the structure of the reference (available in the menu to
 the left) goes as follow:
 
-- @ref group-core\n
+- @ref group-core \n
   Documentation for the core module, which contains everything needed to
   create concepts, data types and related utilities. This is relevant
   if you need to extend the library, but otherwise you can probably
   ignore this.
 
-- @ref group-concepts\n
+- @ref group-concepts \n
   Documentation for all the concepts provided with the library. Each concept:
   - Documents which functions must be implemented absolutely in order to
     model that concept. The set of functions that must be provided is called
@@ -3399,25 +3420,25 @@ the left) goes as follow:
     automatically. When this happens, it will be documented but you don't have
     to do anything special to get that model.
 
-- @ref group-datatypes\n
+- @ref group-datatypes \n
   Documentation for all the data structures provided with the library. Each
   data structure documents the concept(s) it models, and how it does so. It
   also documents the methods tied to it but not to any concept, for example
   `maybe` for `optional`.
 
-- @ref group-functional\n
+- @ref group-functional \n
   General purpose function objects that are generally useful in a purely
   functional setting. These are currently not tied to any concept or container.
 
-- @ref group-ext\n
+- @ref group-ext \n
   Documentation for all the adapters for external libraries. These adapters
   are documented as if they were native types provided by Hana, but obviously
   Hana only provides the compatibility layer between them and the library.
 
-- @ref group-config\n
+- @ref group-config \n
   Macros that can be used to tweak the global behavior of the library.
 
-- @ref group-assertions\n
+- @ref group-assertions \n
   Macros to perform various types of assertions.
 
 - [<b>Alphabetical index</b>](functions.html)\n
@@ -3426,7 +3447,7 @@ the left) goes as follow:
 - [<b>Headers</b>](files.html)\n
   A list of all the headers provided by the library.
 
-- @ref group-details\n
+- @ref group-details \n
   Implementation details; don't go there. Anything not documented at all or
   documented in this group is not guaranteed to be stable.
 
@@ -4146,7 +4167,7 @@ modified as little as possible to work with this reimplementation.
 [Chandler.MeetingC++]: https://youtu.be/qkzaZumt_uk?t=4478
 [CMake]: http://www.cmake.org
 [constexpr_throw]: http://stackoverflow.com/a/8626450/627587
-[CopyConstructible]: http://en.cppreference.com/w/cpp/concept/CopyConstructible
+[CopyConstructible]: http://en.cppreference.com/w/cpp/named_req/CopyConstructible
 [CppCon]: http://cppcon.org
 [GOTW]: http://www.gotw.ca/gotw/index.htm
 [GSoC]: http://www.google-melange.com/gsoc/homepage/google/gsoc2014
@@ -4169,7 +4190,7 @@ modified as little as possible to work with this reimplementation.
 [N4461]: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/n4461.html
 [N4487]: https://isocpp.org/files/papers/N4487.pdf
 [pkg-config]: http://www.freedesktop.org/wiki/Software/pkg-config/
-[POD]: http://en.cppreference.com/w/cpp/concept/PODType
+[POD]: http://en.cppreference.com/w/cpp/named_req/PODType
 [SFINAE]: http://en.cppreference.com/w/cpp/language/sfinae
 [slides.inst_must_go1]: https://github.com/boostcon/2010_presentations/raw/master/mon/instantiations_must_go.pdf
 [slides.inst_must_go2]: https://github.com/boostcon/2010_presentations/raw/master/mon/instantiations_must_go_2.pdf
