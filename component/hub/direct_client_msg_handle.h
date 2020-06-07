@@ -14,6 +14,7 @@
 
 #include "hub.h"
 #include "gatemanager.h"
+#include "log.h"
 
 namespace client_msg{
 
@@ -23,7 +24,13 @@ void client_connect(std::shared_ptr<hub::gatemanager> gates, std::string uuid) {
 
 void call_hub(std::shared_ptr<hub::hub_service> _hub, std::string uuid, std::string _module, std::string func, Fossilizid::JsonParse::JsonArray argv) {
 	hub::current_client_uuid = uuid;
-	_hub->modules.process_module_mothed(_module, func, argv);
+	try {
+		_hub->modules.process_module_mothed(_module, func, argv);
+	}
+	catch (std::exception e) {
+		spdlog::trace("call_hub exception:{0}", e.what());
+		_hub->sig_client_exception(uuid);
+	}
 	hub::current_client_uuid = "";
 }
 
