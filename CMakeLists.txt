@@ -24,6 +24,9 @@ link_directories(${zlib_LIBS_PATH})
 set(websocketpp_INCLUDE_PATH ${PROJECT_SOURCE_DIR}//3rdparty//websocketpp CACHE PATH "websocketpp include path")
 INCLUDE_DIRECTORIES(${websocketpp_INCLUDE_PATH})
 
+set(ssl_INCLUDE_PATH ${PROJECT_SOURCE_DIR}//3rdparty//openssl//include CACHE PATH "ssl include path")
+INCLUDE_DIRECTORIES(${ssl_INCLUDE_PATH})
+
 set(enet_INCLUDE_PATH ${PROJECT_SOURCE_DIR}//3rdparty//enet//include CACHE PATH "enet include path")
 INCLUDE_DIRECTORIES(${enet_INCLUDE_PATH})
 

@@ -29,6 +29,11 @@
 #include "direct_client_msg_handle.h"
 #include "gc_poll.h"
 
+namespace _log {
+
+std::shared_ptr<spdlog::logger> file_logger = nullptr;
+}
+
 namespace hub{
 
 hub_service::hub_service(std::string config_file_path, std::string config_name) {
@@ -84,15 +89,22 @@ void hub_service::init() {
 
 	_juggleservice = std::make_shared<service::juggleservice>();
 
-	if (_config->has_key("out_ip") && _config->has_key("out_port")) {
+	if (_config->has_key("host") && _config->has_key("out_port")) {
 		auto client_call_hub = std::make_shared<module::client_call_hub>();
 		client_call_hub->sig_client_connect.connect(std::bind(client_msg::client_connect, gates, std::placeholders::_1));
 		client_call_hub->sig_call_hub.connect(std::bind(client_msg::call_hub, shared_from_this(), std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
 		auto direct_client_process = std::make_shared<juggle::process>();
 		direct_client_process->reg_module(client_call_hub);
-		_client_service = std::make_shared<service::webacceptservice>(_config->get_value_string("out_ip"), _config->get_value_int("out_port"), direct_client_process);
+		_client_service = std::make_shared<service::webacceptservice>(
+			_config->get_value_string("host"), _config->get_value_int("out_port"), 
+			_config->get_value_bool("is_ssl"),
+			_config->get_value_string("certificate"), _config->get_value_string("private_key"), _config->get_value_string("tmp_dh"),
+			direct_client_process);
 		_client_service->sigchanneldisconnect.connect([this](std::shared_ptr<juggle::Ichannel> ch) {
 			gates->client_direct_disconnect(ch);
+		});
+		_client_service->sigchannelconnectexception.connect([this](std::shared_ptr<juggle::Ichannel> ch) {
+			gates->client_direct_exception(ch);
 		});
 
 		_juggleservice->add_process(direct_client_process);
@@ -183,6 +195,8 @@ void hub_service::poll() {
 			_timerservice->poll();
 
 			_juggleservice->poll();
+
+			_log::file_logger->flush();
 		}
 		catch (std::exception err) {
 			spdlog::error("hub_service::poll error:{0}", err.what());
@@ -191,6 +205,7 @@ void hub_service::poll() {
 		if (close_handle->is_closed) {
 			_centerproxy->closed();
 			_timerservice->addticktimer(2000, [](uint64_t timetmp) {
+				spdlog::shutdown();
 				exit(0);
 			});
 		}

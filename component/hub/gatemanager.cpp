@@ -83,6 +83,8 @@ void gatemanager::client_connect(std::string client_uuid, std::shared_ptr<juggle
 }
 
 void gatemanager::client_direct_connect(std::string client_uuid, std::shared_ptr<juggle::Ichannel> direct_ch) {
+	std::scoped_lock l(_mu);
+
 	if (direct_clients.find(client_uuid) != direct_clients.end()) {
 		return;
 	}
@@ -98,6 +100,8 @@ void gatemanager::client_direct_connect(std::string client_uuid, std::shared_ptr
 }
 
 void gatemanager::client_direct_disconnect(std::shared_ptr<juggle::Ichannel> direct_ch) {
+	std::scoped_lock l(_mu);
+
 	auto it = ch_uuid_direct_clients.find(direct_ch);
 	if (it == ch_uuid_direct_clients.end()) {
 		return;
@@ -105,6 +109,22 @@ void gatemanager::client_direct_disconnect(std::shared_ptr<juggle::Ichannel> dir
 
 	direct_clients.erase(it->second);
 	ch_uuid_direct_clients.erase(it);
+}
+
+void gatemanager::client_direct_exception(std::shared_ptr<juggle::Ichannel> direct_ch) {
+	std::scoped_lock l(_mu);
+
+	auto it = ch_uuid_direct_clients.find(direct_ch);
+	if (it == ch_uuid_direct_clients.end()) {
+		return;
+	}
+
+	direct_clients.erase(it->second);
+	ch_uuid_direct_clients.erase(it);
+
+	if (_hub->sig_client_exception.empty()) {
+		_hub->sig_client_exception(it->second);
+	}
 }
 
 void gatemanager::client_disconnect(std::string client_uuid) {
@@ -130,6 +150,8 @@ void gatemanager::disconnect_client(std::string uuid) {
 }
 
 void gatemanager::call_client(std::string uuid, std::string _module, std::string func, Fossilizid::JsonParse::JsonArray argvs) {
+	std::shared_lock l(_mu);
+
 	auto it_direct_client = direct_clients.find(uuid);
 	if (it_direct_client != direct_clients.end()) {
 		it_direct_client->second->call_client(_module, func, argvs);
@@ -144,6 +166,8 @@ void gatemanager::call_client(std::string uuid, std::string _module, std::string
 }
 
 void gatemanager::call_group_client(std::vector<std::string> uuids, std::string _module, std::string func, Fossilizid::JsonParse::JsonArray argvs) {
+	std::shared_lock l(_mu);
+	
 	std::vector<std::string> tmp_uuids;
 	for (auto _uuid : uuids) {
 		auto it_direct_client = direct_clients.find(_uuid);
@@ -178,6 +202,8 @@ void gatemanager::call_group_client(std::vector<std::string> uuids, std::string 
 }
 
 void gatemanager::call_global_client(std::string _module, std::string func, Fossilizid::JsonParse::JsonArray argvs) {
+	std::shared_lock l(_mu);
+	
 	for (auto _client : direct_clients) {
 		_client.second->call_client(_module, func, argvs);
 	}

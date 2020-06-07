@@ -5,6 +5,7 @@
 #include <boost/any.hpp>
 #include <boost/signals2.hpp>
 
+#include <websocketpp/config/asio.hpp>
 #include <websocketpp/config/asio_no_tls.hpp>
 #include <websocketpp/connection.hpp>
 #include <websocketpp/server.hpp>
@@ -18,10 +19,25 @@ namespace service
 
 class webchannel : public juggle::Ichannel, public std::enable_shared_from_this<webchannel> {
 public:
+	webchannel(std::shared_ptr<websocketpp::server<websocketpp::config::asio_tls> > _server, websocketpp::connection_hdl _hdl)
+	{
+		asio_tls_server = _server;
+		hdl = _hdl;
+		is_ssl = true;
+
+		buff_size = 16 * 1024;
+		buff_offset = 0;
+		buff = new char[buff_size];
+		memset(buff, 0, buff_size);
+
+		is_close = false;
+	}
+
 	webchannel(std::shared_ptr<websocketpp::server<websocketpp::config::asio> > _server, websocketpp::connection_hdl _hdl)
 	{
-		server = _server;
+		asio_server = _server;
 		hdl = _hdl;
+		is_ssl = false;
 
 		buff_size = 16 * 1024;
 		buff_offset = 0;
@@ -36,6 +52,7 @@ public:
 	}
 
 	boost::signals2::signal<void(std::shared_ptr<webchannel>)> sigdisconn;
+	boost::signals2::signal<void(std::shared_ptr<webchannel>)> sigconnexception;
 
 	void recv(std::string resv_data)
 	{
@@ -71,6 +88,7 @@ public:
 					std::string json_str((char*)(json_buff), len);
 					try
 					{
+						spdlog::trace("recv:{0}", json_str);
 						Fossilizid::JsonParse::JsonObject obj;
 						Fossilizid::JsonParse::unpacker(obj, json_str);
 						que.push(std::any_cast<Fossilizid::JsonParse::JsonArray>(obj));
@@ -78,7 +96,7 @@ public:
 					catch (Fossilizid::JsonParse::jsonformatexception e)
 					{
 						spdlog::error("webchannel recv error:{0}", json_str);
-						disconnect();
+						sigconnexception(shared_from_this());
 
 						return;
 					}
@@ -108,10 +126,15 @@ public:
 public:
 	void disconnect() {
 		is_close = true;
-		sigdisconn(shared_from_this());
 
 		try
 		{
+			if (is_ssl) {
+				asio_tls_server->close(hdl, websocketpp::close::status::normal, "");
+			}
+			else {
+				asio_server->close(hdl, websocketpp::close::status::normal, "");
+			}
 		}
 		catch (std::exception e) {
 			spdlog::error("webchannel disconnect error:{0}", e.what());
@@ -146,7 +169,12 @@ public:
 			memcpy(&_data[4], data.c_str(), data.size());
 			size_t datasize = len + 4;
 
-			server->send(hdl, _data, datasize, websocketpp::frame::opcode::binary);
+			if (is_ssl) {
+				asio_tls_server->send(hdl, _data, datasize, websocketpp::frame::opcode::binary);
+			}
+			else {
+				asio_server->send(hdl, _data, datasize, websocketpp::frame::opcode::binary);
+			}
 
 			delete[] _data;
 
@@ -157,12 +185,16 @@ public:
 			is_close = true;
 		}
 	}
+	
+public:
+	websocketpp::connection_hdl hdl;
 
 private:
 	Fossilizid::container::msque< Fossilizid::JsonParse::JsonArray > que;
 
-	std::shared_ptr<websocketpp::server<websocketpp::config::asio> > server;
-	websocketpp::connection_hdl hdl;
+	std::shared_ptr<websocketpp::server<websocketpp::config::asio_tls> > asio_tls_server;
+	std::shared_ptr<websocketpp::server<websocketpp::config::asio> > asio_server;
+	bool is_ssl;
 
 	char * buff;
 	int32_t buff_size;

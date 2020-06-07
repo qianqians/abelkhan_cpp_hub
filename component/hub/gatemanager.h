@@ -10,6 +10,7 @@
 #include <map>
 #include <set>
 #include <memory>
+#include <shared_mutex>
 
 #include <Ichannel.h>
 
@@ -66,6 +67,8 @@ public:
 
 	void client_direct_disconnect(std::shared_ptr<juggle::Ichannel> direct_ch);
 
+	void client_direct_exception(std::shared_ptr<juggle::Ichannel> direct_ch);
+
 	void client_disconnect(std::string client_uuid);
 
 	void client_exception(std::string client_uuid);
@@ -81,7 +84,9 @@ public:
 private:
 	std::shared_ptr<service::enetconnectservice> conn;
 	std::shared_ptr<hub_service> _hub;
-		
+	
+	std::shared_mutex _mu;
+
 	std::unordered_map<std::string, std::shared_ptr<gateproxy> > clients;
 	std::unordered_map<std::string, std::shared_ptr<gateproxy> > gates;
 	std::unordered_map<std::string, std::shared_ptr<directproxy> > direct_clients;

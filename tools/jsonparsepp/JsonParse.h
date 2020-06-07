@@ -15,8 +15,6 @@
 #include <map>
 #include <any>
 
-#include <allocator.h>
-
 namespace Fossilizid{
 namespace JsonParse{
 
@@ -33,13 +31,13 @@ typedef std::string JsonString;
 typedef std::int64_t JsonInt;
 typedef std::double_t JsonFloat;
 typedef std::any JsonObject;
-typedef std::shared_ptr<std::map<std::string, JsonObject, std::less<std::string>, allocator<std::pair<const std::string, JsonObject> > > > JsonTable;
+typedef std::shared_ptr<std::map<std::string, JsonObject> > JsonTable;
 inline JsonTable Make_JsonTable(){
-	return std::make_shared<std::map<std::string, JsonObject, std::less<std::string>, allocator<std::pair<const std::string, JsonObject> > > >();
+	return std::make_shared<std::map<std::string, JsonObject> >();
 }
-typedef std::shared_ptr<std::vector<JsonObject, allocator<JsonObject> > > JsonArray;
+typedef std::shared_ptr<std::vector<JsonObject> > JsonArray;
 inline JsonArray Make_JsonArray(){
-	return std::make_shared<std::vector<JsonObject, allocator<JsonObject> > >();
+	return std::make_shared<std::vector<JsonObject> >();
 }
 static JsonNull JsonNull_t = nullptr;
 
@@ -120,7 +118,7 @@ inline void pack(JsonObject & v, std::string & _out){
 		_pack((JsonFloat)std::any_cast<float>(v), _out);
 	} else if (v.type() == typeid(std::nullptr_t)){
 		_pack(nullptr, _out);
-	} else if (v.type() == typeid(JsonTable) || v.type() == typeid(std::shared_ptr<std::map<std::string, JsonObject, std::less<std::string>, allocator<std::pair<std::string, JsonObject> > > >)){
+	} else if (v.type() == typeid(JsonTable) || v.type() == typeid(std::shared_ptr<std::map<std::string, JsonObject> >)){
 		pack(std::any_cast<JsonTable>(v), _out);
 	} else if (v.type() == typeid(JsonArray) || v.type() == typeid(std::shared_ptr<std::vector<std::any> >)){
 		pack(std::any_cast<JsonArray>(v), _out);

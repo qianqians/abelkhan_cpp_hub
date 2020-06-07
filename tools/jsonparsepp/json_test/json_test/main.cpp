@@ -1,5 +1,4 @@
 #include <JsonParse.h>
-#include <json11.hpp>
 #include <fstream>
 #include <iostream>
 #include <time.h>
@@ -61,16 +60,6 @@ void main()
 		json_str = Fossilizid::JsonParse::packer(o);
 	}
 	std::cout << "JsonParse time:" << clock() - begin << std::endl;
-
-	begin = clock();
-	for (int i = 0; i < 1000000; ++i) {
-		std::string err_comment;
-		auto o = json11::Json::parse(json_str, err_comment);
-		auto obj = o.object_items();
-		obj["v"] = i;
-		json_str = o.dump();
-	}
-	std::cout << "json11 time:" << clock() - begin << std::endl;
 
 	return;
 }
