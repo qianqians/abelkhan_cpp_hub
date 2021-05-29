@@ -45,6 +45,7 @@ hub_service::hub_service(std::string config_file_path, std::string config_name) 
 	_config = _config->get_value_dict(config_name);
 
 	name = _config->get_value_string("hub_name");
+	is_busy = false;
 }
 
 void hub_service::init() {
@@ -213,8 +214,12 @@ void hub_service::poll() {
 			auto _tmp_now = msec_time();
 			auto _tmp_time = _tmp_now - time_now;
 			time_now = _tmp_now;
-			if (_tmp_time < 50) {
-				Sleep(1);
+			if (_tmp_time < 15) {
+				Sleep(0);
+				is_busy = false;
+			}
+			else {
+				is_busy = true;
 			}
 		}
 	}

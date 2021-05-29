@@ -58,6 +58,7 @@ public:
 public:
 	std::string uuid;
 	std::string name;
+	bool is_busy;
 
 	boost::signals2::signal<void(std::string) > sig_client_connect;
 	boost::signals2::signal<void(std::string) > sig_direct_client_connect;
